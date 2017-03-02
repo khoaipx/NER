@@ -220,13 +220,15 @@ def main():
         for batch in utils.iterate_minibatches(X_dev, Y_dev, masks=mask_dev, char_inputs=C_dev, batch_size=batch_size):
             inputs, targets, masks, char_inputs = batch
             err, corr, num, predictions = eval_fn(inputs, targets, masks, char_inputs)
+            print targets
+            print predictions
             dev_err += err * inputs.shape[0]
             dev_corr += corr
             dev_total += num
             dev_inst += inputs.shape[0]
-            if output_predict:
-                utils.output_predictions(predictions, targets, masks, 'tmp/dev%d' % epoch, label_alphabet,
-                                         is_flattened=False)
+            #if output_predict:
+            utils.output_predictions(predictions, targets, masks, 'tmp/dev%d' % epoch, label_alphabet,
+                                     is_flattened=False)
 
         print 'dev loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
             dev_err / dev_inst, dev_corr, dev_total, dev_corr * 100 / dev_total)
@@ -260,8 +262,7 @@ def main():
                 test_total += num
                 test_inst += inputs.shape[0]
                 if output_predict:
-                    utils.output_predictions(predictions, targets, masks, 'tmp/test%d' % epoch, label_alphabet,
-                                             is_flattened=False)
+                    utils.output_predictions(predictions, targets, masks, 'tmp/test%d' % epoch, label_alphabet, is_flattened=False)
 
             print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
                 test_err / test_inst, test_corr, test_total, test_corr * 100 / test_total)
