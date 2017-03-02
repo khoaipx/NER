@@ -49,7 +49,7 @@ def load_word_embedding_dict(embedding, embedding_path, word_alphabet, logger, e
 
                 tokens = line.split()
                 if embedd_dim < 0:
-                    embedd_dim = len(tokens) - 1
+                    embedd_dim = int(tokens[1])
                 else:
                     assert (embedd_dim + 1 == len(tokens))
                 embedd = np.empty([1, embedd_dim], dtype=theano.config.floatX)
