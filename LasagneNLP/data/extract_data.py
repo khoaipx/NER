@@ -17,8 +17,9 @@ def read_data(raw_data):
 def write_file(sentences, out_file):
     writer = codecs.open(out_file, 'w', 'utf8')
     for sent in sentences:
-        for line in sent:
+        for i, line in enumerate(sent):
             tokens = line.split('\t')
+            writer.write(str(i+1) + ' ')
             writer.write(' '.join(tokens[:-1]))
             writer.write('\n')
         writer.write('\n')
