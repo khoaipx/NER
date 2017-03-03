@@ -36,7 +36,7 @@ def get_args():
     parser.add_argument("--lr", default=0.001, type=float, help="learning rate")
     parser.add_argument("--norm", default=1, type=float, help="Threshold for clipping norm of gradient")
     parser.add_argument("--n_batch", default=32, type=int, help="batch size")
-    parser.add_argument("--fepoch", default=600, type=int, help="number of epochs")
+    parser.add_argument("--fepoch", default=1, type=int, help="number of epochs")
     parser.add_argument("--sample", default=0, type=int, help="num of sents to sample from trn in the order of K")
     parser.add_argument("--feat", default='basic', help="feat func to use")
     parser.add_argument("--emb", default=0, type=int, help="embedding layer size")
@@ -170,7 +170,11 @@ class Validator(object):
             # for ddat, datname, dset in zip([self.devdat, self.tstdat],['dev','tst'], [self.dev, self.tst]):
                 start_time = time.time()
                 mcost, pred = rdnn.predict(ddat)
+                print pred
+                print len(pred)
                 pred = [p for b in pred for p in b]
+                print pred
+                print len(pred)
                 end_time = time.time()
                 mtime = end_time - start_time
                 
