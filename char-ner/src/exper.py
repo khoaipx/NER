@@ -3,6 +3,7 @@ import logging
 import argparse
 import time
 from itertools import chain
+import itertools
 import random, numpy as np
 
 import theano
@@ -36,7 +37,7 @@ def get_args():
     parser.add_argument("--lr", default=0.001, type=float, help="learning rate")
     parser.add_argument("--norm", default=1, type=float, help="Threshold for clipping norm of gradient")
     parser.add_argument("--n_batch", default=32, type=int, help="batch size")
-    parser.add_argument("--fepoch", default=1, type=int, help="number of epochs")
+    parser.add_argument("--fepoch", default=600, type=int, help="number of epochs")
     parser.add_argument("--sample", default=0, type=int, help="num of sents to sample from trn in the order of K")
     parser.add_argument("--feat", default='basic', help="feat func to use")
     parser.add_argument("--emb", default=0, type=int, help="embedding layer size")
@@ -105,7 +106,7 @@ class Reporter(object):
 
         return yerr, 0, 0, 0
 
-    def report(self, dset, pred):
+    def report(self, dset, pred, epoch, index):
         pred = [self.tdecoder.decode(s, p) for s, p in zip(dset, pred)]
         y_true = self.feat.yenc.transform([t for sent in dset for t in sent['y']])
         y_pred = list(chain.from_iterable(pred))
@@ -124,8 +125,14 @@ class Reporter(object):
             lts_pred.append(ts_pred) # changed
 
         # wacc, pre, recall, f1 = bilouEval2(lts, lts_pred)
-        print lts
-        print len(lts)
+        # Start out File
+        f = open('tmp/' + index + str(epoch))
+        for sent1, sent2 in zip(lts, lts_pred):
+            for word1, word2 in zip(sent1, sent2):
+                f.write('x x x %s %s\n'%(word1, word2))
+            f.write('\n')
+        f.close()
+        # End out file
         (wacc, pre, recall, f1), conll_print = conlleval(lts, lts_pred)
         logging.debug('')
         logging.debug(conll_print)
@@ -155,7 +162,8 @@ class Validator(object):
     def validate(self, rdnn, argsd):
         logging.info('training the model...')
         dbests = {'trn':(1,0.), 'dev':(1,0.), 'tst':(1,0.)}
-
+        early_stopping = 0
+        best_error_dev = 100
         for e in range(1,argsd['fepoch']+1): # foreach epoch
             logging.info(('{:<5} {:<5} {:>12} ' + ('{:>10} '*7)).format('dset','epoch','mcost', 'mtime', 'yerr', 'pre', 'recall', 'f1', 'best', 'best'))
             """ training """
@@ -185,8 +193,12 @@ class Validator(object):
                 if datname=='trn':
                     yerr, pre, recall, f1 = self.reporter.report_yerr(dset, pred) 
                 else:
-                    yerr, pre, recall, f1 = self.reporter.report(dset, pred) 
-                
+                    yerr, pre, recall, f1 = self.reporter.report(dset, pred, e, datname)
+                if datname=='dev':
+                    if yerr < best_error_dev:
+                        best_error_dev = yerr
+                    else:
+                        early_stopping += 1
                 if f1 > dbests[datname][1]:
                     dbests[datname] = (e,f1)
                     if argsd['save'] and datname == 'dev': # save model to file
@@ -197,6 +209,8 @@ class Validator(object):
                     .format(datname, e, mcost, mtime, yerr, pre, recall, f1, dbests[datname][1], dbests[datname][0]))
             """ end predictions """
             logging.info('')
+            if early_stopping > 5:
+                break
 
 
 

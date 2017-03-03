@@ -8,7 +8,6 @@ def conlleval(ts_gold, ts_pred):
         for t1, t2 in zip(ts1, ts2):
             text += 'x x x %s %s\n'%(t1,t2)
         text += '\n'
-
     proc = subprocess.Popen(
         '%s/conlleval'%SRC_DIR,stdout=subprocess.PIPE,
         stdin=subprocess.PIPE)
