@@ -109,8 +109,8 @@ class Reporter(object):
         pred = [self.tdecoder.decode(s, p) for s, p in zip(dset, pred)]
         y_true = self.feat.yenc.transform([t for sent in dset for t in sent['y']])
         y_pred = list(chain.from_iterable(pred))
-        print y_true
-        print y_pred
+        print len(y_true)
+        print len(y_pred)
         yerr = np.sum(y_true!=y_pred)/float(len(y_true))
 
         # char_conmat_str = self.get_conmat_str(y_true, y_pred, self.feat.tseqenc)
@@ -124,6 +124,8 @@ class Reporter(object):
             lts_pred.append(ts_pred) # changed
 
         # wacc, pre, recall, f1 = bilouEval2(lts, lts_pred)
+        print lts
+        print len(lts)
         (wacc, pre, recall, f1), conll_print = conlleval(lts, lts_pred)
         logging.debug('')
         logging.debug(conll_print)
