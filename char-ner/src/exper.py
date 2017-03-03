@@ -126,7 +126,7 @@ class Reporter(object):
 
         # wacc, pre, recall, f1 = bilouEval2(lts, lts_pred)
      # Start out File
-        f = open('tmp/' + index + str(epoch), 'w')
+        f = open('tmp/' + index + str(epoch), '')
         for sent1, sent2 in zip(lts, lts_pred):
             for word1, word2 in zip(sent1, sent2):
                 f.write('x x x %s %s\n'%(word1, word2))
@@ -195,8 +195,8 @@ class Validator(object):
                 else:
                     yerr, pre, recall, f1 = self.reporter.report(dset, pred, e, datname)
                 if datname=='dev':
-                    if yerr < best_error_dev:
-                        best_error_dev = yerr
+                    if mcost < best_error_dev:
+                        best_error_dev = mcost
                     else:
                         early_stopping += 1
                 if f1 > dbests[datname][1]:
@@ -209,7 +209,7 @@ class Validator(object):
                     .format(datname, e, mcost, mtime, yerr, pre, recall, f1, dbests[datname][1], dbests[datname][0]))
             """ end predictions """
             logging.info('')
-            if early_stopping > 5:
+            if early_stopping > 10:
                 break
 
 
