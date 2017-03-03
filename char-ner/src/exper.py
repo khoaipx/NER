@@ -126,7 +126,7 @@ class Reporter(object):
 
         # wacc, pre, recall, f1 = bilouEval2(lts, lts_pred)
      # Start out File
-        f = open('tmp/' + index + str(epoch), '')
+        f = open('tmp/' + index + str(epoch), 'w')
         for sent1, sent2 in zip(lts, lts_pred):
             for word1, word2 in zip(sent1, sent2):
                 f.write('x x x %s %s\n'%(word1, word2))
