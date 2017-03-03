@@ -109,6 +109,8 @@ class Reporter(object):
         pred = [self.tdecoder.decode(s, p) for s, p in zip(dset, pred)]
         y_true = self.feat.yenc.transform([t for sent in dset for t in sent['y']])
         y_pred = list(chain.from_iterable(pred))
+        print y_true
+        print y_pred
         yerr = np.sum(y_true!=y_pred)/float(len(y_true))
 
         # char_conmat_str = self.get_conmat_str(y_true, y_pred, self.feat.tseqenc)
@@ -170,11 +172,11 @@ class Validator(object):
             # for ddat, datname, dset in zip([self.devdat, self.tstdat],['dev','tst'], [self.dev, self.tst]):
                 start_time = time.time()
                 mcost, pred = rdnn.predict(ddat)
-                print pred
-                print len(pred)
+                #print pred
+                #print len(pred)
                 pred = [p for b in pred for p in b]
-                print pred
-                print len(pred)
+                #print pred
+                #print len(pred)
                 end_time = time.time()
                 mtime = end_time - start_time
                 
