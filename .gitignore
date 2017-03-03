@@ -2,4 +2,6 @@
 */.idea/*
 *.pyc
 *.gz
-.LasagneNLP/tmp/*
+LasagneNLP/tmp/*
+*/tmp/*
+*/logs/*
