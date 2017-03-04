@@ -165,10 +165,10 @@ def main():
         start_time = time.time()
         num_back = 0
         train_batches = 0
-        for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train, char_inputs=C_train,
+        for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train,
                                                batch_size=batch_size, shuffle=True):
-            inputs, targets, masks, char_inputs = batch
-            err, corr, num = train_fn(inputs, targets, masks, char_inputs)
+            inputs, targets, masks = batch
+            err, corr, num = train_fn(inputs, targets, masks)
             train_err += err * inputs.shape[0]
             train_corr += corr
             train_total += num
