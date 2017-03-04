@@ -235,6 +235,14 @@ def build_BiLSTM_CNN_CRF(incoming1, incoming2, num_units, num_labels, mask=None,
     return CRFLayer(bi_lstm_cnn, num_labels, mask_input=mask)
 
 
+def build_BiLSTM_CRF(incoming, num_units, num_labels, mask=None, grad_clipping=0, precompute_input=True,
+                         peepholes=False, dropout=True, in_to_out=False):
+    bi_lstm = build_BiLSTM(incoming, num_units, mask=mask, grad_clipping=grad_clipping,
+                           precompute_input=precompute_input, peepholes=peepholes, dropout=dropout, in_to_out=in_to_out)
+
+    return CRFLayer(bi_lstm, num_labels, mask_input=mask)
+
+
 def build_BiLSTM_HighCNN(incoming1, incoming2, num_units, mask=None, grad_clipping=0, precompute_input=True,
                          peepholes=False, num_filters=20, dropout=True, in_to_out=False):
     # first get some necessary dimensions or parameters
