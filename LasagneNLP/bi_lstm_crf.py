@@ -167,7 +167,7 @@ def main():
         train_batches = 0
         for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train,
                                                batch_size=batch_size, shuffle=True):
-            inputs, targets, masks = batch
+            inputs, targets, masks, _ = batch
             err, corr, num = train_fn(inputs, targets, masks)
             train_err += err * inputs.shape[0]
             train_corr += corr
@@ -197,7 +197,7 @@ def main():
         dev_total = 0
         dev_inst = 0
         for batch in utils.iterate_minibatches(X_dev, Y_dev, masks=mask_dev, batch_size=batch_size):
-            inputs, targets, masks = batch
+            inputs, targets, masks, _ = batch
             err, corr, num, predictions = eval_fn(inputs, targets, masks)
             dev_err += err * inputs.shape[0]
             dev_corr += corr
@@ -232,7 +232,7 @@ def main():
             test_inst = 0
             for batch in utils.iterate_minibatches(X_test, Y_test, masks=mask_test,
                                                    batch_size=batch_size):
-                inputs, targets, masks = batch
+                inputs, targets, masks, _ = batch
                 err, corr, num, predictions = eval_fn(inputs, targets, masks)
                 test_err += err * inputs.shape[0]
                 test_corr += corr
