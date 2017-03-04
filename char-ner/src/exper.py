@@ -210,7 +210,7 @@ class Validator(object):
                     .format(datname, e, mcost, mtime, yerr, pre, recall, f1, dbests[datname][1], dbests[datname][0]))
             """ end predictions """
             logging.info('')
-            if early_stopping > 10:
+            if early_stopping > 20:
                 break
 
 
