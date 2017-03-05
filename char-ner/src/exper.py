@@ -30,13 +30,13 @@ def get_args():
     parser.add_argument("--rep", default='std', choices=['std','nospace','spec'], help="which representation to use")
     parser.add_argument("--activation", default='bi-lstm', help="activation function for hidden layer: bi-relu bi-lstm bi-tanh")
     parser.add_argument("--fbmerge", default='concat', choices=['concat','sum'], help="how to merge forward backward layer outputs")
-    parser.add_argument("--n_hidden", default=[128], nargs='+', type=int, help="number of neurons in each hidden layer")
+    parser.add_argument("--n_hidden", default=[200], nargs='+', type=int, help="number of neurons in each hidden layer")
     parser.add_argument("--recout", default=0, type=int, help="use recurrent output layer")
     parser.add_argument("--drates", default=[0, 0], nargs='+', type=float, help="dropout rates")
     parser.add_argument("--opt", default="adam", help="optimization method: sgd, rmsprop, adagrad, adam")
     parser.add_argument("--lr", default=0.001, type=float, help="learning rate")
     parser.add_argument("--norm", default=1, type=float, help="Threshold for clipping norm of gradient")
-    parser.add_argument("--n_batch", default=32, type=int, help="batch size")
+    parser.add_argument("--n_batch", default=10, type=int, help="batch size")
     parser.add_argument("--fepoch", default=600, type=int, help="number of epochs")
     parser.add_argument("--sample", default=0, type=int, help="num of sents to sample from trn in the order of K")
     parser.add_argument("--feat", default='basic', help="feat func to use")
@@ -210,7 +210,7 @@ class Validator(object):
                     .format(datname, e, mcost, mtime, yerr, pre, recall, f1, dbests[datname][1], dbests[datname][0]))
             """ end predictions """
             logging.info('')
-            if early_stopping > 20:
+            if early_stopping > 5:
                 break
 
 
