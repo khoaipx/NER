@@ -79,6 +79,7 @@ def main():
     gamma = args.gamma
     output_predict = args.output_prediction
     dropout = args.dropout
+    print "Dropout: " + str(dropout)
 
     X_train, Y_train, mask_train, X_dev, Y_dev, mask_dev, X_test, Y_test, mask_test, \
     embedd_table, label_alphabet, \
