@@ -9,7 +9,7 @@ from lasagne_nlp.utils.objectives import crf_loss, crf_accuracy
 import lasagne
 import theano
 import theano.tensor as T
-from lasagne_nlp.networks.networks import build_BiLSTM_CNN_CRF
+from lasagne_nlp.networks.networks import build_BiLSTM_2_CNN_CRF
 
 import numpy as np
 
@@ -63,7 +63,7 @@ def main():
         layer_char_input = lasagne.layers.DimshuffleLayer(layer_char_embedding, pattern=(0, 2, 1))
         return layer_char_input
 
-    logger = utils.get_logger("BiLSTM-CNN-CRF")
+    logger = utils.get_logger("BiLSTM-2-CNN-CRF")
     fine_tune = args.fine_tune
     oov = args.oov
     regular = args.regular
@@ -117,7 +117,7 @@ def main():
     # construct bi-rnn-cnn
     num_units = args.num_units
 
-    bi_lstm_cnn_crf = build_BiLSTM_CNN_CRF(layer_incoming1, layer_incoming2, num_units, num_labels, mask=layer_mask,
+    bi_lstm_cnn_crf = build_BiLSTM_2_CNN_CRF(layer_incoming1, layer_incoming2, num_units, num_labels, mask=layer_mask,
                                            grad_clipping=grad_clipping, peepholes=peepholes, num_filters=num_filters,
                                            dropout=dropout)
 
