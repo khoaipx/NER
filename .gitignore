@@ -5,3 +5,4 @@
 LasagneNLP/tmp/*
 */tmp/*
 */logs/*
+.DS_Store
