@@ -117,23 +117,23 @@ def main():
     num_units_word = args.num_units_word
     num_units_char = args.num_units_char
 
-    bi_lstm_cnn_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
+    bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
                                             mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
 
-    logger.info("Network structure: hidden=%d, filter=%d" % (num_units_word, num_units_char))
+    logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
     # compute loss
     num_tokens = mask_var.sum(dtype=theano.config.floatX)
 
     # get outpout of bi-lstm-cnn-crf shape [batch, length, num_labels, num_labels]
-    energies_train = lasagne.layers.get_output(bi_lstm_cnn_crf)
-    energies_eval = lasagne.layers.get_output(bi_lstm_cnn_crf, deterministic=True)
+    energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
+    energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
 
     loss_train = crf_loss(energies_train, target_var, mask_var).mean()
     loss_eval = crf_loss(energies_eval, target_var, mask_var).mean()
     # l2 regularization?
     if regular == 'l2':
-        l2_penalty = lasagne.regularization.regularize_network_params(bi_lstm_cnn_crf, lasagne.regularization.l2)
+        l2_penalty = lasagne.regularization.regularize_network_params(bi_lstm_lstm_crf, lasagne.regularization.l2)
         loss_train = loss_train + gamma * l2_penalty
 
     _, corr_train = crf_accuracy(energies_train, target_var)
@@ -147,7 +147,7 @@ def main():
     learning_rate = 1.0 if update_algo == 'adadelta' else args.learning_rate
     decay_rate = args.decay_rate
     momentum = 0.9
-    params = lasagne.layers.get_all_params(bi_lstm_cnn_crf, trainable=True)
+    params = lasagne.layers.get_all_params(bi_lstm_lstm_crf, trainable=True)
     updates = utils.create_updates(loss_train, params, update_algo, learning_rate, momentum=momentum)
 
     # Compile a function performing a training step on a mini-batch
