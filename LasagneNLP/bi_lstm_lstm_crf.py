@@ -194,6 +194,7 @@ def main():
         for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train, char_inputs=C_train,
                                                batch_size=batch_size, shuffle=True):
             inputs, targets, masks, char_inputs = batch
+            print np.shape(inputs), np.shape(targets), np.shape(masks), np.shape(char_inputs)
             err, corr, num = train_fn(inputs, targets, masks, char_inputs)
             train_err += err * inputs.shape[0]
             train_corr += corr
