@@ -389,6 +389,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
                                      precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
     print 'Char-LSTM'
     print output_lstm_layer.output_shape
+    output_lstm_layer = lasagne.layers.reshape(output_lstm_layer, (-1, sent_length, [1]))
 
     # finally, concatenate the two incoming layers together.
     incoming = lasagne.layers.concat([output_lstm_layer, incoming2], axis=2)
