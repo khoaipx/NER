@@ -146,7 +146,7 @@ def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precomput
     print lstm_forward.output_shape
     print lstm_backward.output_shape
     # concatenate the outputs of forward and backward RNNs to combine them.
-    concat = lasagne.layers.concat([lstm_forward, lstm_backward], axis=2, name="bi-lstm")
+    concat = lasagne.layers.concat([lstm_forward, lstm_backward], axis=1, name="bi-lstm")
     print concat.output_shape
     # dropout for output
     if dropout:
