@@ -393,6 +393,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
 
     # finally, concatenate the two incoming layers together.
     incoming = lasagne.layers.concat([output_lstm_layer, incoming2], axis=2)
+    print incoming.output_shape
 
     return build_BiLSTM(incoming, num_units_word, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
                         precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
@@ -466,7 +467,7 @@ def build_BiLSTM_LSTM_CRF(incoming1, incoming2, num_units_word, num_units_char, 
     bi_lstm_cnn = build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask=mask,
                                     grad_clipping=grad_clipping, precompute_input=precompute_input, peepholes=peepholes,
                                     dropout=dropout, in_to_out=in_to_out)
-
+    print bi_lstm_cnn.output_shape
     return CRFLayer(bi_lstm_cnn, num_labels, mask_input=mask)
 
 
