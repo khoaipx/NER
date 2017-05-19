@@ -2,7 +2,7 @@ __author__ = 'max'
 
 import lasagne
 import lasagne.nonlinearities as nonlinearities
-from lasagne.layers import Gate
+from lasagne.layers import Gate, SliceLayer
 from lasagne_nlp.networks.crf import CRFLayer
 from lasagne_nlp.networks.highway import HighwayDenseLayer
 
@@ -97,6 +97,64 @@ def build_BiLSTM(incoming, num_units, mask=None, grad_clipping=0, precompute_inp
     #print 'Bi-LSTM'
     #print concat.output_shape
     return concat
+
+
+def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precompute_input=True, peepholes=False, dropout=True,
+                 in_to_out=False):
+    # construct the forward and backward rnns. Now, Ws are initialized by Glorot initializer with default arguments.
+    # Need to try other initializers for specific tasks.
+
+    # dropout for incoming
+    if dropout:
+        incoming = lasagne.layers.DropoutLayer(incoming, p=0.5)
+
+    ingate_forward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(),
+                          W_cell=lasagne.init.Uniform(range=0.1))
+    outgate_forward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(),
+                           W_cell=lasagne.init.Uniform(range=0.1))
+    # according to Jozefowicz et al.(2015), init bias of forget gate to 1.
+    forgetgate_forward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(),
+                              W_cell=lasagne.init.Uniform(range=0.1), b=lasagne.init.Constant(1.))
+    # now use tanh for nonlinear function of cell, need to try pure linear cell
+    cell_forward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(), W_cell=None,
+                        nonlinearity=nonlinearities.tanh)
+    lstm_forward = lasagne.layers.LSTMLayer(incoming, num_units, mask_input=mask, grad_clipping=grad_clipping,
+                                            nonlinearity=nonlinearities.tanh, peepholes=peepholes,
+                                            precompute_input=precompute_input,
+                                            ingate=ingate_forward, outgate=outgate_forward,
+                                            forgetgate=forgetgate_forward, cell=cell_forward, name='forward')
+
+    ingate_backward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(),
+                           W_cell=lasagne.init.Uniform(range=0.1))
+    outgate_backward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(),
+                            W_cell=lasagne.init.Uniform(range=0.1))
+    # according to Jozefowicz et al.(2015), init bias of forget gate to 1.
+    forgetgate_backward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(),
+                               W_cell=lasagne.init.Uniform(range=0.1), b=lasagne.init.Constant(1.))
+    # now use tanh for nonlinear function of cell, need to try pure linear cell
+    cell_backward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(), W_cell=None,
+                         nonlinearity=nonlinearities.tanh)
+    lstm_backward = lasagne.layers.LSTMLayer(incoming, num_units, mask_input=mask, grad_clipping=grad_clipping,
+                                             nonlinearity=nonlinearities.tanh, peepholes=peepholes,
+                                             precompute_input=precompute_input, backwards=True,
+                                             ingate=ingate_backward, outgate=outgate_backward,
+                                             forgetgate=forgetgate_backward, cell=cell_backward, name='backward')
+
+    # concatenate the outputs of forward and backward RNNs to combine them.
+    concat = lasagne.layers.concat([SliceLayer(lstm_forward, indices=-1, axis=1), SliceLayer(lstm_backward, indices=-1, axis=1)], axis=2, name="bi-lstm")
+
+    # dropout for output
+    if dropout:
+        concat = lasagne.layers.DropoutLayer(concat, p=0.5)
+
+    if in_to_out:
+        concat = lasagne.layers.concat([concat, incoming], axis=2)
+
+    # the shape of BiRNN output (concat) is (batch_size, input_length, 2 * num_hidden_units)
+    #print 'Bi-LSTM'
+    #print concat.output_shape
+    return concat
+
 
 
 def build_BiLSTM_2(incoming, num_units, mask=None, grad_clipping=0, precompute_input=True, peepholes=False, dropout=True,
@@ -322,7 +380,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
     if dropout:
         incoming1 = lasagne.layers.DropoutLayer(incoming1, p=0.5)
 
-    output_lstm_layer = build_BiLSTM(incoming1, num_units_char, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
+    output_lstm_layer = build_BiLSTM_char(incoming1, num_units_char, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
                                      precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
     print 'Char-LSTM'
     print output_lstm_layer.output_shape
