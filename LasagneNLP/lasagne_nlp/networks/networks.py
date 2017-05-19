@@ -314,6 +314,9 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
                       precompute_input=True, peepholes=False, dropout=True, in_to_out=False):
     # first get some necessary dimensions or parameters
     _, sent_length, _ = incoming2.output_shape
+    print 'Incomming'
+    print incoming1.output_shape
+    print incoming2.output_shape
 
     # dropout before cnn?
     if dropout:
@@ -321,6 +324,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
 
     output_lstm_layer = build_BiLSTM(incoming1, num_units_char, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
                                      precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
+    print output_lstm_layer.output_shape
 
     # finally, concatenate the two incoming layers together.
     incoming = lasagne.layers.concat([output_lstm_layer, incoming2], axis=2)
