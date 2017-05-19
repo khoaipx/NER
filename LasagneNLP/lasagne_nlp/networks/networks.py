@@ -458,7 +458,7 @@ def build_BiLSTM_CNN_CRF(incoming1, incoming2, num_units, num_labels, mask=None,
     bi_lstm_cnn = build_BiLSTM_CNN(incoming1, incoming2, num_units, mask=mask, grad_clipping=grad_clipping,
                                    precompute_input=precompute_input, peepholes=peepholes,
                                    num_filters=num_filters, dropout=dropout, in_to_out=in_to_out)
-
+    print bi_lstm_cnn.output_shape
     return CRFLayer(bi_lstm_cnn, num_labels, mask_input=mask)
 
 
