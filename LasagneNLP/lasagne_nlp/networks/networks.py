@@ -288,12 +288,16 @@ def build_BiLSTM_CNN(incoming1, incoming2, num_units, mask=None, grad_clipping=0
     # construct convolution layer
     cnn_layer = lasagne.layers.Conv1DLayer(incoming1, num_filters=num_filters, filter_size=conv_window, pad='full',
                                            nonlinearity=lasagne.nonlinearities.tanh, name='cnn')
+    print 'Incomming'
+    print incoming1.output_shape
+    print incoming2.output_shape
     print 'CNN'
     print cnn_layer.output_shape
     # infer the pool size for pooling (pool size should go through all time step of cnn)
     _, _, pool_size = cnn_layer.output_shape
     # construct max pool layer
     pool_layer = lasagne.layers.MaxPool1DLayer(cnn_layer, pool_size=pool_size)
+    print pool_layer.output_shape
     # reshape the layer to match lstm incoming layer [batch * sent_length, num_filters, 1] --> [batch, sent_length, num_filters]
     output_cnn_layer = lasagne.layers.reshape(pool_layer, (-1, sent_length, [1]))
     print output_cnn_layer.output_shape
