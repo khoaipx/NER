@@ -61,6 +61,7 @@ def main():
                                                      input_var=char_input_var, name='char-input')
         print layer_char_input.output_shape
         layer_char_input = lasagne.layers.reshape(layer_char_input, (-1, [2]))
+        print layer_char_input.output_shape
         layer_char_embedding = lasagne.layers.EmbeddingLayer(layer_char_input, input_size=char_alphabet_size,
                                                              output_size=char_embedd_dim, W=char_embedd_table,
                                                              name='char_embedding')
