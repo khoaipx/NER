@@ -42,7 +42,6 @@ def main():
     args = parser.parse_args()
 
     def construct_input_layer():
-        print input_var.shape
         if fine_tune:
             layer_input = lasagne.layers.InputLayer(shape=(None, max_length), input_var=input_var, name='input')
             layer_embedding = lasagne.layers.EmbeddingLayer(layer_input, input_size=alphabet_size,
@@ -55,7 +54,6 @@ def main():
             return layer_input
 
     def construct_char_input_layer():
-        print char_input_var.shape
         layer_char_input = lasagne.layers.InputLayer(shape=(None, max_sent_length, max_char_length),
                                                      input_var=char_input_var, name='char-input')
         layer_char_input = lasagne.layers.reshape(layer_char_input, (-1, [2]))
@@ -91,7 +89,8 @@ def main():
                                                                                               embedding_path=embedding_path,
                                                                                               use_character=True)
     num_labels = label_alphabet.size() - 1
-
+    print np.shape(X_train), np.shape(Y_train), np.shape(mask_train), np.shape(embedd_table), np.shape(label_alphabet),\
+        np.shape(C_train). np.shape(char_embedd_table)
     logger.info("constructing network...")
     # create variables
     target_var = T.imatrix(name='targets')
