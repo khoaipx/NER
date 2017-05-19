@@ -61,7 +61,7 @@ def main():
                                                              output_size=char_embedd_dim, W=char_embedd_table,
                                                              name='char_embedding')
         #layer_char_input = lasagne.layers.DimshuffleLayer(layer_char_embedding, pattern=(0, 2, 1))
-        return layer_char_input
+        return layer_char_embedding
 
     logger = utils.get_logger("BiLSTM-2-CNN-CRF")
     fine_tune = args.fine_tune
