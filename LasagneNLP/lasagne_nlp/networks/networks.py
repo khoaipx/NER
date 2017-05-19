@@ -94,8 +94,8 @@ def build_BiLSTM(incoming, num_units, mask=None, grad_clipping=0, precompute_inp
         concat = lasagne.layers.concat([concat, incoming], axis=2)
 
     # the shape of BiRNN output (concat) is (batch_size, input_length, 2 * num_hidden_units)
-    print 'Bi-LSTM'
-    print concat.output_shape
+    #print 'Bi-LSTM'
+    #print concat.output_shape
     return concat
 
 
@@ -324,6 +324,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
 
     output_lstm_layer = build_BiLSTM(incoming1, num_units_char, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
                                      precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
+    print 'Char-LSTM'
     print output_lstm_layer.output_shape
 
     # finally, concatenate the two incoming layers together.
