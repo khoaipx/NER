@@ -116,9 +116,9 @@ def main():
     assert (num_data == num_data_char)
 
     # construct input and mask layers
-    print 'Word'
-    layer_incoming1 = construct_char_input_layer()
     print 'Char'
+    layer_incoming1 = construct_char_input_layer()
+    print 'Word'
     layer_incoming2 = construct_input_layer()
 
     layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
