@@ -130,7 +130,7 @@ def main():
                                            grad_clipping=grad_clipping, peepholes=peepholes, num_filters=num_filters,
                                            dropout=dropout)
 
-    """logger.info("Network structure: hidden=%d, filter=%d" % (num_units, num_filters))
+    logger.info("Network structure: hidden=%d, filter=%d" % (num_units, num_filters))
 
     # compute loss
     num_tokens = mask_var.sum(dtype=theano.config.floatX)
@@ -301,7 +301,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
 
 
 def test():
