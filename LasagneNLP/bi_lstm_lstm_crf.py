@@ -120,7 +120,7 @@ def main():
     bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
                                             mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
 
-    logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
+    """logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
     # compute loss
     num_tokens = mask_var.sum(dtype=theano.config.floatX)
@@ -291,7 +291,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
 
 
 def test():
