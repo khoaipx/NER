@@ -9,7 +9,7 @@ from lasagne_nlp.utils.objectives import crf_loss, crf_accuracy
 import lasagne
 import theano
 import theano.tensor as T
-from lasagne_nlp.networks.networks import build_BiLSTM_2_CNN_CRF
+from lasagne_nlp.networks.networks import build_BiLSTM_CNN_CRF
 
 import numpy as np
 
@@ -121,16 +121,16 @@ def main():
     print 'Char'
     layer_incoming2 = construct_input_layer()
 
-    """layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
+    layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
 
     # construct bi-rnn-cnn
     num_units = args.num_units
 
-    bi_lstm_cnn_crf = build_BiLSTM_2_CNN_CRF(layer_incoming1, layer_incoming2, num_units, num_labels, mask=layer_mask,
+    bi_lstm_cnn_crf = build_BiLSTM_CNN_CRF(layer_incoming1, layer_incoming2, num_units, num_labels, mask=layer_mask,
                                            grad_clipping=grad_clipping, peepholes=peepholes, num_filters=num_filters,
                                            dropout=dropout)
 
-    logger.info("Network structure: hidden=%d, filter=%d" % (num_units, num_filters))
+    """logger.info("Network structure: hidden=%d, filter=%d" % (num_units, num_filters))
 
     # compute loss
     num_tokens = mask_var.sum(dtype=theano.config.floatX)

@@ -94,6 +94,8 @@ def build_BiLSTM(incoming, num_units, mask=None, grad_clipping=0, precompute_inp
         concat = lasagne.layers.concat([concat, incoming], axis=2)
 
     # the shape of BiRNN output (concat) is (batch_size, input_length, 2 * num_hidden_units)
+    print 'Bi-LSTM'
+    print concat.output_shape
     return concat
 
 
@@ -286,6 +288,8 @@ def build_BiLSTM_CNN(incoming1, incoming2, num_units, mask=None, grad_clipping=0
     # construct convolution layer
     cnn_layer = lasagne.layers.Conv1DLayer(incoming1, num_filters=num_filters, filter_size=conv_window, pad='full',
                                            nonlinearity=lasagne.nonlinearities.tanh, name='cnn')
+    print 'CNN'
+    print cnn_layer.output_shape
     # infer the pool size for pooling (pool size should go through all time step of cnn)
     _, _, pool_size = cnn_layer.output_shape
     # construct max pool layer
@@ -295,6 +299,8 @@ def build_BiLSTM_CNN(incoming1, incoming2, num_units, mask=None, grad_clipping=0
 
     # finally, concatenate the two incoming layers together.
     incoming = lasagne.layers.concat([output_cnn_layer, incoming2], axis=2)
+    print 'CNN-LSTM'
+    print incoming.output_shape
 
     return build_BiLSTM(incoming, num_units, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
                         precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
