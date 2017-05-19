@@ -44,23 +44,29 @@ def main():
     def construct_input_layer():
         if fine_tune:
             layer_input = lasagne.layers.InputLayer(shape=(None, max_length), input_var=input_var, name='input')
+            print layer_input.output_shape
             layer_embedding = lasagne.layers.EmbeddingLayer(layer_input, input_size=alphabet_size,
                                                             output_size=embedd_dim,
                                                             W=embedd_table, name='embedding')
+            print layer_embedding.output_shape
             return layer_embedding
         else:
             layer_input = lasagne.layers.InputLayer(shape=(None, max_length, embedd_dim), input_var=input_var,
                                                     name='input')
+            print layer_input.output_shape
             return layer_input
 
     def construct_char_input_layer():
         layer_char_input = lasagne.layers.InputLayer(shape=(None, max_sent_length, max_char_length),
                                                      input_var=char_input_var, name='char-input')
+        print layer_char_input.output_shape
         layer_char_input = lasagne.layers.reshape(layer_char_input, (-1, [2]))
         layer_char_embedding = lasagne.layers.EmbeddingLayer(layer_char_input, input_size=char_alphabet_size,
                                                              output_size=char_embedd_dim, W=char_embedd_table,
                                                              name='char_embedding')
+        print layer_char_embedding.output_shape
         layer_char_input = lasagne.layers.DimshuffleLayer(layer_char_embedding, pattern=(0, 2, 1))
+        print layer_char_input.output_shape
         return layer_char_input
 
     logger = utils.get_logger("BiLSTM-2-CNN-CRF")
@@ -109,10 +115,10 @@ def main():
     assert (num_data == num_data_char)
 
     # construct input and mask layers
+    print 'Word'
     layer_incoming1 = construct_char_input_layer()
+    print 'Char'
     layer_incoming2 = construct_input_layer()
-    print layer_incoming1.output_shape
-    print layer_incoming2.output_shape
 
     """layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
 
