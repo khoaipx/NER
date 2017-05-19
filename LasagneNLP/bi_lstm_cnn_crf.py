@@ -111,8 +111,10 @@ def main():
     # construct input and mask layers
     layer_incoming1 = construct_char_input_layer()
     layer_incoming2 = construct_input_layer()
+    print layer_incoming1.output_shape
+    print layer_incoming2.output_shape
 
-    layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
+    """layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
 
     # construct bi-rnn-cnn
     num_units = args.num_units
@@ -292,7 +294,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
 
 
 def test():

@@ -303,7 +303,6 @@ def build_BiLSTM_CNN(incoming1, incoming2, num_units, mask=None, grad_clipping=0
 def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask=None, grad_clipping=0,
                       precompute_input=True, peepholes=False, dropout=True, in_to_out=False):
     # first get some necessary dimensions or parameters
-    conv_window = 3
     _, sent_length, _ = incoming2.output_shape
 
     # dropout before cnn?
