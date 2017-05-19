@@ -90,7 +90,7 @@ def main():
                                                                                               use_character=True)
     num_labels = label_alphabet.size() - 1
     print np.shape(X_train), np.shape(Y_train), np.shape(mask_train), np.shape(embedd_table), np.shape(label_alphabet),\
-        np.shape(C_train). np.shape(char_embedd_table)
+        np.shape(C_train), np.shape(char_embedd_table)
     logger.info("constructing network...")
     # create variables
     target_var = T.imatrix(name='targets')
