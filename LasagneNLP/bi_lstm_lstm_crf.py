@@ -112,16 +112,16 @@ def main():
 
     # construct input and mask layers
     layer_incoming1 = construct_char_input_layer()
-    print 'Char'
-    print layer_incoming1.output_shape
+    #print 'Char'
+    #print layer_incoming1.output_shape
 
     layer_incoming2 = construct_input_layer()
-    print 'Word'
-    print layer_incoming2.output_shape
+    #print 'Word'
+    #print layer_incoming2.output_shape
 
     layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
-    print 'Mask'
-    print layer_mask.output_shape
+    #print 'Mask'
+    #print layer_mask.output_shape
 
     # construct bi-rnn-cnn
     num_units_word = args.num_units_word
