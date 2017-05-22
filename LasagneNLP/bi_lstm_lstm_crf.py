@@ -10,6 +10,7 @@ import lasagne
 import theano
 import theano.tensor as T
 from lasagne_nlp.networks.networks import build_BiLSTM_LSTM_CRF
+from theano import pp
 
 import numpy as np
 
@@ -89,8 +90,8 @@ def main():
                                                                                               embedding_path=embedding_path,
                                                                                               use_character=True)
     num_labels = label_alphabet.size() - 1
-    print np.shape(X_train), np.shape(Y_train), np.shape(mask_train), np.shape(embedd_table), np.shape(label_alphabet),\
-        np.shape(C_train), np.shape(char_embedd_table)
+    #print np.shape(X_train), np.shape(Y_train), np.shape(mask_train), np.shape(embedd_table), np.shape(label_alphabet),\
+    #    np.shape(C_train), np.shape(char_embedd_table)
     logger.info("constructing network...")
     # create variables
     target_var = T.imatrix(name='targets')
@@ -115,8 +116,10 @@ def main():
     layer_incoming2 = construct_input_layer()
     print 'Word'
     print layer_incoming2.output_shape
+    print pp(layer_incoming1)
+    print pp(layer_incoming2)
 
-    layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
+    """layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
 
     # construct bi-rnn-cnn
     num_units_word = args.num_units_word
@@ -297,7 +300,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
 
 
 def test():
