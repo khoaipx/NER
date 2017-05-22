@@ -107,8 +107,8 @@ def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precomput
     # dropout for incoming
     print 'Incomming char'
     print incoming.output_shape
-    if dropout:
-        incoming = lasagne.layers.DropoutLayer(incoming, p=0.5)
+    #if dropout:
+    #    incoming = lasagne.layers.DropoutLayer(incoming, p=0.5)
 
     ingate_forward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(),
                           W_cell=lasagne.init.Uniform(range=0.1))
