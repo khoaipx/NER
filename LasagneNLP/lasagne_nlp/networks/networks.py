@@ -105,6 +105,8 @@ def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precomput
     # Need to try other initializers for specific tasks.
 
     # dropout for incoming
+    print 'Incomming char'
+    print incoming.output_shape
     if dropout:
         incoming = lasagne.layers.DropoutLayer(incoming, p=0.5)
 
@@ -377,8 +379,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
                       precompute_input=True, peepholes=False, dropout=True, in_to_out=False):
     # first get some necessary dimensions or parameters
     _, sent_length, _ = incoming2.output_shape
-    print 'Incomming'
-    print incoming1.output_shape
+    print 'Incomming word'
     print incoming2.output_shape
 
     # dropout before cnn?
@@ -393,6 +394,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
 
     # finally, concatenate the two incoming layers together.
     incoming = lasagne.layers.concat([output_lstm_layer, incoming2], axis=2)
+    print 'concat'
     print incoming.output_shape
 
     return build_BiLSTM(incoming, num_units_word, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
@@ -468,8 +470,7 @@ def build_BiLSTM_LSTM_CRF(incoming1, incoming2, num_units_word, num_units_char, 
                                     grad_clipping=grad_clipping, precompute_input=precompute_input, peepholes=peepholes,
                                     dropout=dropout, in_to_out=in_to_out)
     print bi_lstm_lstm.output_shape
-    #return CRFLayer(bi_lstm_cnn, num_labels, mask_input=mask)
-    return bi_lstm_lstm
+    return CRFLayer(bi_lstm_lstm, num_labels, mask_input=mask)
 
 
 def build_BiLSTM_2_CNN_CRF(incoming1, incoming2, num_units, num_labels, mask=None, grad_clipping=0, precompute_input=True,
