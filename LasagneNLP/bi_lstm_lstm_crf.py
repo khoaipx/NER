@@ -131,11 +131,11 @@ def main():
     logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
     # compute loss
-    """num_tokens = mask_var.sum(dtype=theano.config.floatX)
+    num_tokens = mask_var.sum(dtype=theano.config.floatX)
 
     # get outpout of bi-lstm-cnn-crf shape [batch, length, num_labels, num_labels]
     energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
-    energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
+    """energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
 
     loss_train = crf_loss(energies_train, target_var, mask_var).mean()
     loss_eval = crf_loss(energies_eval, target_var, mask_var).mean()
@@ -164,7 +164,7 @@ def main():
     # Compile a second function evaluating the loss and accuracy of network
     eval_fn = theano.function([input_var, target_var, mask_var, char_input_var],
                               [loss_eval, corr_eval, num_tokens, prediction_eval])"""
-    train_fn = theano.function([input_var, target_var, mask_var, char_input_var], [bi_lstm_lstm_crf])
+    train_fn = theano.function([input_var, target_var, mask_var, char_input_var], [energies_train])
     # Finally, launch the training loop.
     logger.info(
         "Start training: %s with regularization: %s(%f), dropout: %s, fine tune: %s (#training data: %d, batch size: %d, clip: %.1f, peepholes: %s)..." \
