@@ -200,7 +200,7 @@ def main():
             inputs, targets, masks, char_inputs = batch
             print np.shape(inputs), np.shape(masks), np.shape(char_inputs)
             #print inputs
-            err, corr, num = train_fn(inputs, masks)
+            err, corr, num = train_fn(inputs, masks, char_inputs)
             train_err += err * inputs.shape[0]
             train_corr += corr
             train_total += num
