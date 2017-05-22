@@ -58,13 +58,13 @@ def main():
         layer_char_input = lasagne.layers.InputLayer(shape=(None, max_sent_length, max_char_length),
                                                      input_var=char_input_var, name='char-input')
         print layer_char_input.output_shape
-        #layer_char_input = lasagne.layers.reshape(layer_char_input, (-1, [2]))
-        #print layer_char_input.output_shape
-        #layer_char_embedding = lasagne.layers.EmbeddingLayer(layer_char_input, input_size=char_alphabet_size,
-        #                                                     output_size=char_embedd_dim, W=char_embedd_table,
-        #                                                     name='char_embedding')
+        layer_char_input = lasagne.layers.reshape(layer_char_input, (-1, [2]))
+        print layer_char_input.output_shape
+        layer_char_embedding = lasagne.layers.EmbeddingLayer(layer_char_input, input_size=char_alphabet_size,
+                                                             output_size=char_embedd_dim, W=char_embedd_table,
+                                                             name='char_embedding')
         #layer_char_input = lasagne.layers.DimshuffleLayer(layer_char_embedding, pattern=(0, 2, 1))
-        return layer_char_input
+        return layer_char_embedding
 
     logger = utils.get_logger("BiLSTM-LSTM-CRF")
     fine_tune = args.fine_tune
