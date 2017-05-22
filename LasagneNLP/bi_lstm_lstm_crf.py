@@ -127,7 +127,7 @@ def main():
 
     bi_lstm_lstm_crf = build_BiLSTM_LSTM(layer_incoming1, layer_incoming2, num_units_word, num_units_char,
                                             mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
-    print bi_lstm_lstm_crf.get_all_layers()
+    #print bi_lstm_lstm_crf.get_all_layers()
 
     logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
