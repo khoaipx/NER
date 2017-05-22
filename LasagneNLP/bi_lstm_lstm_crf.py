@@ -9,7 +9,7 @@ from lasagne_nlp.utils.objectives import crf_loss, crf_accuracy
 import lasagne
 import theano
 import theano.tensor as T
-from lasagne_nlp.networks.networks import build_BiLSTM_LSTM
+from lasagne_nlp.networks.networks import build_BiLSTM_LSTM_CRF, build_BiLSTM
 from theano import pp
 
 import numpy as np
@@ -125,9 +125,9 @@ def main():
     num_units_word = args.num_units_word
     num_units_char = args.num_units_char
 
-    bi_lstm_lstm_crf = build_BiLSTM_LSTM(layer_incoming1, layer_incoming2, num_units_word, num_units_char,
-                                            mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
-    #print bi_lstm_lstm_crf.get_all_layers()
+    #bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
+    #                                        mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
+    bi_lstm_lstm_crf = build_BiLSTM(layer_incoming2, num_units_word, mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
 
     logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
@@ -136,7 +136,6 @@ def main():
 
     # get outpout of bi-lstm-cnn-crf shape [batch, length, num_labels, num_labels]
     energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
-    print energies_train
     """energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
 
     loss_train = crf_loss(energies_train, target_var, mask_var).mean()
