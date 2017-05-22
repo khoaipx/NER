@@ -464,11 +464,12 @@ def build_BiLSTM_CNN_CRF(incoming1, incoming2, num_units, num_labels, mask=None,
 
 def build_BiLSTM_LSTM_CRF(incoming1, incoming2, num_units_word, num_units_char, num_labels, mask=None, grad_clipping=0,
                           precompute_input=True, peepholes=False, dropout=True, in_to_out=False):
-    bi_lstm_cnn = build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask=mask,
+    bi_lstm_lstm = build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask=mask,
                                     grad_clipping=grad_clipping, precompute_input=precompute_input, peepholes=peepholes,
                                     dropout=dropout, in_to_out=in_to_out)
-    print bi_lstm_cnn.output_shape
-    return CRFLayer(bi_lstm_cnn, num_labels, mask_input=mask)
+    print bi_lstm_lstm.output_shape
+    #return CRFLayer(bi_lstm_cnn, num_labels, mask_input=mask)
+    return bi_lstm_lstm
 
 
 def build_BiLSTM_2_CNN_CRF(incoming1, incoming2, num_units, num_labels, mask=None, grad_clipping=0, precompute_input=True,
