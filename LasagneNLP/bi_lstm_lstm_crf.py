@@ -168,7 +168,7 @@ def main():
     # Compile a second function evaluating the loss and accuracy of network
     eval_fn = theano.function([input_var, target_var, mask_var, char_input_var],
                               [loss_eval, corr_eval, num_tokens, prediction_eval])"""
-    train_fn = theano.function([mask_var, char_input_var], [energies_train])
+    train_fn = theano.function([char_input_var], [energies_train])
     # Finally, launch the training loop.
     logger.info(
         "Start training: %s with regularization: %s(%f), dropout: %s, fine tune: %s (#training data: %d, batch size: %d, clip: %.1f, peepholes: %s)..." \
@@ -203,7 +203,7 @@ def main():
             inputs, targets, masks, char_inputs = batch
             print np.shape(inputs), np.shape(masks), np.shape(char_inputs)
             #print inputs
-            err, corr, num = train_fn(masks, char_inputs)
+            err, corr, num = train_fn(char_inputs)
             train_err += err * inputs.shape[0]
             train_corr += corr
             train_total += num
