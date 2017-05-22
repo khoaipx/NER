@@ -135,6 +135,7 @@ def main():
 
     # get outpout of bi-lstm-cnn-crf shape [batch, length, num_labels, num_labels]
     energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
+    print energies_train
     """energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
 
     loss_train = crf_loss(energies_train, target_var, mask_var).mean()
