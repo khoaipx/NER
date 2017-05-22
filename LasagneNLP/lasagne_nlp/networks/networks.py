@@ -389,7 +389,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
     if dropout:
         incoming1 = lasagne.layers.DropoutLayer(incoming1, p=0.5)
 
-    output_lstm_layer = build_BiLSTM_char(incoming1, num_units_char, mask=mask, grad_clipping=grad_clipping, peepholes=peepholes,
+    output_lstm_layer = build_BiLSTM_char(incoming1, num_units_char, grad_clipping=grad_clipping, peepholes=peepholes,
                                      precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
     print 'Char-LSTM'
     print output_lstm_layer.output_shape

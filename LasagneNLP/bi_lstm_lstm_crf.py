@@ -9,7 +9,7 @@ from lasagne_nlp.utils.objectives import crf_loss, crf_accuracy
 import lasagne
 import theano
 import theano.tensor as T
-from lasagne_nlp.networks.networks import build_BiLSTM
+from lasagne_nlp.networks.networks import build_BiLSTM_LSTM_CRF
 from theano import pp
 
 import numpy as np
@@ -57,9 +57,9 @@ def main():
     def construct_char_input_layer():
         layer_char_input = lasagne.layers.InputLayer(shape=(None, max_sent_length, max_char_length),
                                                      input_var=char_input_var, name='char-input')
-        print layer_char_input.output_shape
+        #print layer_char_input.output_shape
         layer_char_input = lasagne.layers.reshape(layer_char_input, (-1, [2]))
-        print layer_char_input.output_shape
+        #print layer_char_input.output_shape
         layer_char_embedding = lasagne.layers.EmbeddingLayer(layer_char_input, input_size=char_alphabet_size,
                                                              output_size=char_embedd_dim, W=char_embedd_table,
                                                              name='char_embedding')
@@ -128,17 +128,17 @@ def main():
     num_units_word = args.num_units_word
     num_units_char = args.num_units_char
 
-    #bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
-    #                                        mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
-    bi_lstm_lstm_crf = build_BiLSTM(layer_incoming1, num_units_char, mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
+    bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
+                                            mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
+    #bi_lstm_lstm_crf = build_BiLSTM(layer_incoming1, num_units_char, mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
     logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
     # compute loss
     num_tokens = mask_var.sum(dtype=theano.config.floatX)
 
     # get outpout of bi-lstm-cnn-crf shape [batch, length, num_labels, num_labels]
-    energies_train = lasagne.layers.get_output(layer_incoming1)
-    """energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
+    #energies_train = lasagne.layers.get_output(layer_incoming1)
+    energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
     energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
 
     loss_train = crf_loss(energies_train, target_var, mask_var).mean()
@@ -151,7 +151,7 @@ def main():
     _, corr_train = crf_accuracy(energies_train, target_var)
     corr_train = (corr_train * mask_var).sum(dtype=theano.config.floatX)
     prediction_eval, corr_eval = crf_accuracy(energies_eval, target_var)
-    corr_eval = (corr_eval * mask_var).sum(dtype=theano.config.floatX)"""
+    corr_eval = (corr_eval * mask_var).sum(dtype=theano.config.floatX)
 
     # Create update expressions for training.
     # hyper parameters to tune: learning rate, momentum, regularization.
@@ -160,15 +160,15 @@ def main():
     decay_rate = args.decay_rate
     momentum = 0.9
     params = lasagne.layers.get_all_params(bi_lstm_lstm_crf, trainable=True)
-    """updates = utils.create_updates(loss_train, params, update_algo, learning_rate, momentum=momentum)
+    updates = utils.create_updates(loss_train, params, update_algo, learning_rate, momentum=momentum)
 
     # Compile a function performing a training step on a mini-batch
     train_fn = theano.function([input_var, target_var, mask_var, char_input_var], [loss_train, corr_train, num_tokens],
                                updates=updates)
     # Compile a second function evaluating the loss and accuracy of network
     eval_fn = theano.function([input_var, target_var, mask_var, char_input_var],
-                              [loss_eval, corr_eval, num_tokens, prediction_eval])"""
-    train_fn = theano.function([char_input_var], [energies_train])
+                              [loss_eval, corr_eval, num_tokens, prediction_eval])
+    #train_fn = theano.function([char_input_var], [energies_train])
     # Finally, launch the training loop.
     logger.info(
         "Start training: %s with regularization: %s(%f), dropout: %s, fine tune: %s (#training data: %d, batch size: %d, clip: %.1f, peepholes: %s)..." \
@@ -201,9 +201,8 @@ def main():
         for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train, char_inputs=C_train,
                                                batch_size=batch_size, shuffle=True):
             inputs, targets, masks, char_inputs = batch
-            print np.shape(inputs), np.shape(masks), np.shape(char_inputs)
-            #print inputs
-            err, corr, num = train_fn(char_inputs)
+            #print np.shape(inputs), np.shape(masks), np.shape(char_inputs)
+            err, corr, num = train_fn(inputs, targets, masks, char_inputs)
             train_err += err * inputs.shape[0]
             train_corr += corr
             train_total += num
