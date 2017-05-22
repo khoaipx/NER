@@ -137,8 +137,9 @@ def main():
     num_tokens = mask_var.sum(dtype=theano.config.floatX)
 
     # get outpout of bi-lstm-cnn-crf shape [batch, length, num_labels, num_labels]
-    energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
-    """energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
+    energies_train = lasagne.layers.get_output(layer_incoming1)
+    """energies_train = lasagne.layers.get_output(bi_lstm_lstm_crf)
+    energies_eval = lasagne.layers.get_output(bi_lstm_lstm_crf, deterministic=True)
 
     loss_train = crf_loss(energies_train, target_var, mask_var).mean()
     loss_eval = crf_loss(energies_eval, target_var, mask_var).mean()
