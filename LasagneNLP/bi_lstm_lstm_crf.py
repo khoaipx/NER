@@ -9,7 +9,7 @@ from lasagne_nlp.utils.objectives import crf_loss, crf_accuracy
 import lasagne
 import theano
 import theano.tensor as T
-from lasagne_nlp.networks.networks import build_BiLSTM_LSTM_CRF, build_BiLSTM
+from lasagne_nlp.networks.networks import build_BiLSTM_LSTM_CRF
 from theano import pp
 
 import numpy as np
@@ -57,6 +57,7 @@ def main():
     def construct_char_input_layer():
         layer_char_input = lasagne.layers.InputLayer(shape=(None, max_sent_length, max_char_length),
                                                      input_var=char_input_var, name='char-input')
+        print layer_char_input.output_shape
         layer_char_input = lasagne.layers.reshape(layer_char_input, (-1, [2]))
         layer_char_embedding = lasagne.layers.EmbeddingLayer(layer_char_input, input_size=char_alphabet_size,
                                                              output_size=char_embedd_dim, W=char_embedd_table,
@@ -113,6 +114,7 @@ def main():
     layer_incoming1 = construct_char_input_layer()
     print 'Char'
     print layer_incoming1.output_shape
+
     layer_incoming2 = construct_input_layer()
     print 'Word'
     print layer_incoming2.output_shape
@@ -125,10 +127,8 @@ def main():
     num_units_word = args.num_units_word
     num_units_char = args.num_units_char
 
-    #bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
-    #                                        mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
-    bi_lstm_lstm_crf = build_BiLSTM(layer_incoming2, num_units_word, mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
-
+    bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
+                                            mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
     logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
     # compute loss
@@ -165,7 +165,7 @@ def main():
     # Compile a second function evaluating the loss and accuracy of network
     eval_fn = theano.function([input_var, target_var, mask_var, char_input_var],
                               [loss_eval, corr_eval, num_tokens, prediction_eval])"""
-    train_fn = theano.function([input_var, mask_var], [energies_train])
+    train_fn = theano.function([input_var, mask_var, char_input_var], [energies_train])
     # Finally, launch the training loop.
     logger.info(
         "Start training: %s with regularization: %s(%f), dropout: %s, fine tune: %s (#training data: %d, batch size: %d, clip: %.1f, peepholes: %s)..." \
