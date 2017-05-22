@@ -9,7 +9,7 @@ from lasagne_nlp.utils.objectives import crf_loss, crf_accuracy
 import lasagne
 import theano
 import theano.tensor as T
-from lasagne_nlp.networks.networks import build_BiLSTM_LSTM_CRF
+from lasagne_nlp.networks.networks import build_BiLSTM_LSTM
 from theano import pp
 
 import numpy as np
@@ -125,7 +125,7 @@ def main():
     num_units_word = args.num_units_word
     num_units_char = args.num_units_char
 
-    bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
+    bi_lstm_lstm_crf = build_BiLSTM_LSTM(layer_incoming1, layer_incoming2, num_units_word, num_units_char,
                                             mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
     print bi_lstm_lstm_crf.get_all_layers()
 
