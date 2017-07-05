@@ -124,6 +124,7 @@ def main():
 
     layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
     layer_mask_c = lasagne.layers.InputLayer(shape=(None, max_length, max_char_length), input_var=mask_c_var, name='mask-c')
+    layer_mask_c = lasagne.layers.reshape(layer_mask_c, (-1, [2]))
     #print 'Mask'
     #print layer_mask.output_shape
 
