@@ -85,7 +85,7 @@ def main():
 
     X_train, Y_train, mask_train, X_dev, Y_dev, mask_dev, X_test, Y_test, mask_test, \
     embedd_table, label_alphabet, \
-    C_train, C_dev, C_test, char_embedd_table = data_processor.load_dataset_sequence_labeling(train_path, dev_path,
+    C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test = data_processor.load_dataset_sequence_labeling(train_path, dev_path,
                                                                                               test_path, oov=oov,
                                                                                               fine_tune=fine_tune,
                                                                                               embedding=embedding,
@@ -99,6 +99,7 @@ def main():
     # create variables
     target_var = T.imatrix(name='targets')
     mask_var = T.matrix(name='masks', dtype=theano.config.floatX)
+    mask_c_var = T.matrix(name='masks-c', dtype=theano.config.floatX)
     if fine_tune:
         input_var = T.imatrix(name='inputs')
         num_data, max_length = X_train.shape
@@ -122,6 +123,7 @@ def main():
     #print layer_incoming2.output_shape
 
     layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
+    layer_mask_c = lasagne.layers.InputLayer(shape=(None, max_length, max_char_length), input_var=mask_var, name='mask')
     #print 'Mask'
     #print layer_mask.output_shape
 
@@ -130,7 +132,7 @@ def main():
     num_units_char = args.num_units_char
 
     bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
-                                            mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
+                                            mask=layer_mask, mask_c=layer_mask_c, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
     #bi_lstm_lstm_crf = build_BiLSTM(layer_incoming1, num_units_char, mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
     logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
 
@@ -164,10 +166,10 @@ def main():
     updates = utils.create_updates(loss_train, params, update_algo, learning_rate, momentum=momentum)
 
     # Compile a function performing a training step on a mini-batch
-    train_fn = theano.function([input_var, target_var, mask_var, char_input_var], [loss_train, corr_train, num_tokens],
+    train_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var], [loss_train, corr_train, num_tokens],
                                updates=updates)
     # Compile a second function evaluating the loss and accuracy of network
-    eval_fn = theano.function([input_var, target_var, mask_var, char_input_var],
+    eval_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var],
                               [loss_eval, corr_eval, num_tokens, prediction_eval])
     #train_fn = theano.function([char_input_var], [energies_train])
     # Finally, launch the training loop.
@@ -199,11 +201,11 @@ def main():
         start_time = time.time()
         num_back = 0
         train_batches = 0
-        for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train, char_inputs=C_train,
+        for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train, masks_c=mask_c_train, char_inputs=C_train,
                                                batch_size=batch_size, shuffle=True):
-            inputs, targets, masks, char_inputs = batch
+            inputs, targets, masks, masks_c, char_inputs = batch
             #print np.shape(inputs), np.shape(masks), np.shape(char_inputs)
-            err, corr, num = train_fn(inputs, targets, masks, char_inputs)
+            err, corr, num = train_fn(inputs, targets, masks, masks_c, char_inputs)
             train_err += err * inputs.shape[0]
             train_corr += corr
             train_total += num
@@ -231,9 +233,9 @@ def main():
         dev_corr = 0.0
         dev_total = 0
         dev_inst = 0
-        for batch in utils.iterate_minibatches(X_dev, Y_dev, masks=mask_dev, char_inputs=C_dev, batch_size=batch_size):
-            inputs, targets, masks, char_inputs = batch
-            err, corr, num, predictions = eval_fn(inputs, targets, masks, char_inputs)
+        for batch in utils.iterate_minibatches(X_dev, Y_dev, masks=mask_dev, masks_c=mask_c_dev, char_inputs=C_dev, batch_size=batch_size):
+            inputs, targets, masks, masks_c, char_inputs = batch
+            err, corr, num, predictions = eval_fn(inputs, targets, masks, masks_c, char_inputs)
             dev_err += err * inputs.shape[0]
             dev_corr += corr
             dev_total += num
@@ -265,10 +267,10 @@ def main():
             test_corr = 0.0
             test_total = 0
             test_inst = 0
-            for batch in utils.iterate_minibatches(X_test, Y_test, masks=mask_test, char_inputs=C_test,
+            for batch in utils.iterate_minibatches(X_test, Y_test, masks=mask_test, masks_c=mask_c_test, char_inputs=C_test,
                                                    batch_size=batch_size):
-                inputs, targets, masks, char_inputs = batch
-                err, corr, num, predictions = eval_fn(inputs, targets, masks, char_inputs)
+                inputs, targets, masks, masks_c, char_inputs = batch
+                err, corr, num, predictions = eval_fn(inputs, targets, masks, masks_c, char_inputs)
                 test_err += err * inputs.shape[0]
                 test_corr += corr
                 test_total += num
@@ -295,7 +297,7 @@ def main():
         if update_algo != 'adadelta':
             lr = learning_rate / (1.0 + epoch * decay_rate)
             updates = utils.create_updates(loss_train, params, update_algo, lr, momentum=momentum)
-            train_fn = theano.function([input_var, target_var, mask_var, char_input_var],
+            train_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var],
                                         [loss_train, corr_train, num_tokens],
                                         updates=updates)
 
