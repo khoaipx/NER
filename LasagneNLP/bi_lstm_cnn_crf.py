@@ -96,6 +96,7 @@ def main():
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                              use_character=True)
+    print np.shape(C_train)
     #print word_sentences_train
     """num_labels = label_alphabet.size() - 1
 
