@@ -36,7 +36,7 @@ def load_word_embedding_dict(embedding, embedding_path, word_alphabet, logger, e
         logger.info("Loading word2vec ...")
         word2vec = Word2Vec.load_word2vec_format(embedding_path, binary=False)
         embedd_dim = word2vec.vector_size
-        return word2vec, embedd_dim, False
+        return word2vec, embedd_dim, True
     elif embedding == 'glove':
         # loading GloVe
         logger.info("Loading GloVe ...")
@@ -55,7 +55,7 @@ def load_word_embedding_dict(embedding, embedding_path, word_alphabet, logger, e
                 embedd = np.empty([1, embedd_dim], dtype=theano.config.floatX)
                 embedd[:] = tokens[1:]
                 embedd_dict[tokens[0]] = embedd
-        return embedd_dict, embedd_dim, False
+        return embedd_dict, embedd_dim, True
     elif embedding == 'senna':
         # loading Senna
         logger.info("Loading Senna ...")
