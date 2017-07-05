@@ -2,7 +2,7 @@ import codecs
 
 
 def load_word2vec(filename):
-    f = codecs.open(filename, 'r', 'utf-8', 'ignore')
+    f = codecs.open(filename, 'r', 'utf-8')
     word2vec_list = []
     f.readline()
     cnt = 0
