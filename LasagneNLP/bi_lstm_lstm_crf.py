@@ -92,7 +92,7 @@ def main():
                                                                                               embedding_path=embedding_path,
                                                                                               use_character=True)
     print np.shape(mask_dev)
-    """num_labels = label_alphabet.size() - 1
+    num_labels = label_alphabet.size() - 1
     #print np.shape(X_train), np.shape(Y_train), np.shape(mask_train), np.shape(embedd_table), np.shape(label_alphabet),\
     #    np.shape(C_train), np.shape(char_embedd_table)
     logger.info("constructing network...")
@@ -305,7 +305,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
 
 
 def test():
