@@ -259,7 +259,7 @@ def generate_character_data(sentences_train, sentences_dev, sentences_test, max_
                     C[i, j, k] = cid
                 # fill index of word end after the end of word
                 C[i, j, char_length:] = word_end_id
-                mask_c[, j, char_length:] = 0
+                mask_c[i, j, char_length:] = 0
             # Zero out C after the end of the sentence
             C[i, sent_length:, :] = 0
             mask_c[i, sent_length:, :] = 0
