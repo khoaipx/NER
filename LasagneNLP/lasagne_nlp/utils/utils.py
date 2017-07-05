@@ -7,6 +7,7 @@ import lasagne
 from gensim.models.word2vec import Word2Vec
 import gzip
 import theano
+import codecs
 
 
 def get_logger(name, level=logging.INFO, handler=sys.stdout,
@@ -33,7 +34,7 @@ def load_word_embedding_dict(embedding, embedding_path, word_alphabet, logger, e
     if embedding == 'word2vec':
         # loading word2vec
         logger.info("Loading word2vec ...")
-        word2vec = Word2Vec.load_word2vec_format(embedding_path, binary=True)
+        word2vec = Word2Vec.load_word2vec_format(embedding_path, binary=False)
         embedd_dim = word2vec.vector_size
         return word2vec, embedd_dim, False
     elif embedding == 'glove':
@@ -46,7 +47,6 @@ def load_word_embedding_dict(embedding, embedding_path, word_alphabet, logger, e
                 line = line.strip()
                 if len(line) == 0:
                     continue
-
                 tokens = line.split()
                 if embedd_dim < 0:
                     embedd_dim = int(tokens[1])
@@ -55,7 +55,7 @@ def load_word_embedding_dict(embedding, embedding_path, word_alphabet, logger, e
                 embedd = np.empty([1, embedd_dim], dtype=theano.config.floatX)
                 embedd[:] = tokens[1:]
                 embedd_dict[tokens[0]] = embedd
-        return embedd_dict, embedd_dim, True
+        return embedd_dict, embedd_dim, False
     elif embedding == 'senna':
         # loading Senna
         logger.info("Loading Senna ...")
