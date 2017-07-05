@@ -14,6 +14,7 @@ def load_word2vec(filename):
             print cnt
             print line
     f.close()
+    print
     return word2vec_list
 
 
