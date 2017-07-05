@@ -39,7 +39,7 @@ def read_conll_sequence_labeling(path, word_alphabet, label_alphabet, word_colum
     label_ids = []
 
     num_tokens = 0
-    with codecs.open(path, 'utf-8') as file:
+    with codecs.open(path, 'r', 'utf-8') as file:
         for line in file:
             #line.decode('utf-8')
             if line.strip() == "":
