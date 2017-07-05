@@ -99,7 +99,7 @@ def build_BiLSTM(incoming, num_units, mask=None, grad_clipping=0, precompute_inp
     return concat
 
 
-def build_BiLSTM_char(incoming, num_units, mask_c=None, grad_clipping=0, precompute_input=True, peepholes=False, dropout=True,
+def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precompute_input=True, peepholes=False, dropout=True,
                  in_to_out=False):
     # construct the forward and backward rnns. Now, Ws are initialized by Glorot initializer with default arguments.
     # Need to try other initializers for specific tasks.
@@ -120,7 +120,7 @@ def build_BiLSTM_char(incoming, num_units, mask_c=None, grad_clipping=0, precomp
     # now use tanh for nonlinear function of cell, need to try pure linear cell
     cell_forward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(), W_cell=None,
                         nonlinearity=nonlinearities.tanh)
-    lstm_forward = lasagne.layers.LSTMLayer(incoming, num_units, mask_input=mask_c, grad_clipping=grad_clipping,
+    lstm_forward = lasagne.layers.LSTMLayer(incoming, num_units, mask_input=mask, grad_clipping=grad_clipping,
                                             nonlinearity=nonlinearities.tanh, peepholes=peepholes,
                                             precompute_input=precompute_input,
                                             ingate=ingate_forward, outgate=outgate_forward,
@@ -136,7 +136,7 @@ def build_BiLSTM_char(incoming, num_units, mask_c=None, grad_clipping=0, precomp
     # now use tanh for nonlinear function of cell, need to try pure linear cell
     cell_backward = Gate(W_in=lasagne.init.GlorotUniform(), W_hid=lasagne.init.GlorotUniform(), W_cell=None,
                          nonlinearity=nonlinearities.tanh)
-    lstm_backward = lasagne.layers.LSTMLayer(incoming, num_units, mask_input=mask_c, grad_clipping=grad_clipping,
+    lstm_backward = lasagne.layers.LSTMLayer(incoming, num_units, mask_input=mask, grad_clipping=grad_clipping,
                                              nonlinearity=nonlinearities.tanh, peepholes=peepholes,
                                              precompute_input=precompute_input, backwards=True,
                                              ingate=ingate_backward, outgate=outgate_backward,
@@ -389,7 +389,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
     if dropout:
         incoming1 = lasagne.layers.DropoutLayer(incoming1, p=0.5)
 
-    output_lstm_layer = build_BiLSTM_char(incoming1, num_units_char, mask_c=mask_c, grad_clipping=grad_clipping, peepholes=peepholes,
+    output_lstm_layer = build_BiLSTM_char(incoming1, num_units_char, mask=None, grad_clipping=grad_clipping, peepholes=peepholes,
                                      precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
     print 'Char-LSTM'
     print output_lstm_layer.output_shape
