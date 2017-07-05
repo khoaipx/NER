@@ -246,6 +246,7 @@ def generate_character_data(sentences_train, sentences_dev, sentences_test, max_
     def construct_tensor_char(index_sentences):
         C = np.empty([len(index_sentences), max_sent_length, max_char_length], dtype=np.int32)
         word_end_id = char_alphabet.get_index(word_end)
+        mask_c = np.ones([len(index_sentences), max_sent_length, max_char_length], dtype=theano.config.floatX)
 
         for i in range(len(index_sentences)):
             words = index_sentences[i]
@@ -258,9 +259,11 @@ def generate_character_data(sentences_train, sentences_dev, sentences_test, max_
                     C[i, j, k] = cid
                 # fill index of word end after the end of word
                 C[i, j, char_length:] = word_end_id
+                mask_c[, j, char_length:] = 0
             # Zero out C after the end of the sentence
             C[i, sent_length:, :] = 0
-        return C
+            mask_c[i, sent_length:, :] = 0
+        return C, mask_c
 
     def build_char_embedd_table():
         scale = np.sqrt(3.0 / char_embedd_dim)
@@ -286,11 +289,11 @@ def generate_character_data(sentences_train, sentences_dev, sentences_test, max_
     logger.info("Maximum character length used for training is %d" % max_char_length)
 
     # fill character tensor
-    C_train = construct_tensor_char(index_sentences_train)
-    C_dev = construct_tensor_char(index_sentences_dev)
-    C_test = construct_tensor_char(index_sentences_test)
+    C_train, mask_c_train = construct_tensor_char(index_sentences_train)
+    C_dev, mask_c_dev = construct_tensor_char(index_sentences_dev)
+    C_test, mask_c_test = construct_tensor_char(index_sentences_test)
 
-    return C_train, C_dev, C_test, build_char_embedd_table()
+    return C_train, C_dev, C_test, build_char_embedd_table(), mask_c_train, mask_c_dev, mask_c_test
 
 
 def get_max_length(word_sentences):
@@ -372,14 +375,13 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
                                                                   label_index_sentences_train)
         X_dev, Y_dev, mask_dev = construct_tensor_fine_tune(word_index_sentences_dev, label_index_sentences_dev)
         X_test, Y_test, mask_test = construct_tensor_fine_tune(word_index_sentences_test, label_index_sentences_test)
-        C_train, C_dev, C_test, char_embedd_table = generate_character_data(word_sentences_train, word_sentences_dev,
+        C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test = generate_character_data(word_sentences_train, word_sentences_dev,
                                                                             word_sentences_test,
                                                                             max_length) if use_character else (
             None, None, None, None)
         return X_train, Y_train, mask_train, X_dev, Y_dev, mask_dev, X_test, Y_test, mask_test, \
                build_embedd_table(word_alphabet, embedd_dict, embedd_dim, caseless), label_alphabet, \
-               C_train, C_dev, C_test, char_embedd_table, word_sentences_train, word_sentences_dev, \
-               word_sentences_test
+               C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test
 
     def construct_tensor_not_fine_tune(word_sentences, label_index_sentences, unknown_embedd, embedd_dict,
                                        embedd_dim, caseless):

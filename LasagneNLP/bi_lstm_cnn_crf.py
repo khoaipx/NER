@@ -90,13 +90,13 @@ def main():
 
     X_train, Y_train, mask_train, X_dev, Y_dev, mask_dev, X_test, Y_test, mask_test, \
     embedd_table, label_alphabet, \
-    C_train, C_dev, C_test, char_embedd_table, word_sentences_train, word_sentences_dev, word_sentences_test = data_processor.load_dataset_sequence_labeling(train_path, dev_path,
+    C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test = data_processor.load_dataset_sequence_labeling(train_path, dev_path,
                                                                                               test_path, oov=oov,
                                                                                               fine_tune=fine_tune,
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                              use_character=True)
-    print np.shape(C_train)
+    print mask_c_test[0]
     #print word_sentences_train
     """num_labels = label_alphabet.size() - 1
 
