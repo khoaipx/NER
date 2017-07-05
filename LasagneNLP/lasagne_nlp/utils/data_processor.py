@@ -2,6 +2,7 @@ __author__ = 'max'
 
 import numpy as np
 import theano
+import codecs
 
 from alphabet import Alphabet
 from lasagne_nlp.utils import utils as utils
@@ -38,9 +39,9 @@ def read_conll_sequence_labeling(path, word_alphabet, label_alphabet, word_colum
     label_ids = []
 
     num_tokens = 0
-    with open(path) as file:
+    with codecs.open(path, 'utf-8') as file:
         for line in file:
-            line.decode('utf-8')
+            #line.decode('utf-8')
             if line.strip() == "":
                 if 0 < len(words) <= MAX_LENGTH:
                     word_sentences.append(words[:])
