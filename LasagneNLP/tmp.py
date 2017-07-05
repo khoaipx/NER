@@ -8,7 +8,7 @@ def load_word2vec(filename):
     cnt = 0
     for line in f:
         cnt += 1
-
+        print cnt
         try:
             word2vec_list.append(line.split()[0])
         except:
