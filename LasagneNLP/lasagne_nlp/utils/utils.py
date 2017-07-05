@@ -109,6 +109,7 @@ def iterate_minibatches(inputs, targets, masks=None, masks_c=None, char_inputs=N
     print type(masks_c)
     if char_inputs is not None:
         assert len(inputs) == len(char_inputs)
+    print type(char_inputs)
     if shuffle:
         indices = np.arange(len(inputs))
         np.random.shuffle(indices)
