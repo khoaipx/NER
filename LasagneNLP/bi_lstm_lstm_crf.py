@@ -99,7 +99,7 @@ def main():
     # create variables
     target_var = T.imatrix(name='targets')
     mask_var = T.matrix(name='masks', dtype=theano.config.floatX)
-    mask_c_var = T.matrix(name='masks-c', dtype=theano.config.floatX)
+    mask_c_var = T.tensor3(name='masks-c', dtype=theano.config.floatX)
     if fine_tune:
         input_var = T.imatrix(name='inputs')
         num_data, max_length = X_train.shape
