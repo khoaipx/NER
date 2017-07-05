@@ -455,7 +455,7 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
     logger.info("Reading data from training set...")
     word_sentences_train, _, word_index_sentences_train, label_index_sentences_train = read_conll_sequence_labeling(
         train_path, word_alphabet, label_alphabet, word_column, label_column)
-    print word_sentences_train[0]
+    #print word_sentences_train[0]
     print word_index_sentences_train[0]
     #print label_index_sentences_train
 
