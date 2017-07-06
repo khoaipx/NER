@@ -639,10 +639,10 @@ def load_dataset_parsing(train_path, dev_path, test_path, word_column=1, pos_col
 
 def generate_mask_slice(last_index, num_data, max_length, max_length_char, num_units):
     print (num_data, max_length, max_length_char, num_units)
-    mask_slice = np.zeros((num_data, max_length, max_length_char, num_units))
+    mask_slice = np.zeros((num_data, max_length, max_length_char, num_units), dtype=np.float32)
     for i in range(num_data):
         for j in range(max_length):
-            mask_slice[i][int(last_index[i][j])] = np.ones(num_units)
+            mask_slice[i][int(last_index[i][j])] = np.ones(num_units, dtype=np.float32)
     return mask_slice
 
 
