@@ -115,7 +115,7 @@ def main():
     target_var = T.imatrix(name='targets')
     mask_var = T.matrix(name='masks', dtype=theano.config.floatX)
     mask_c_var = T.tensor3(name='masks-c', dtype=theano.config.floatX)
-    mask_slice_var = T.tensor4(name='masks-slice', dtype=theano.config.floatX)
+    mask_slice_var = T.itensor4(name='masks-slice')
     if fine_tune:
         input_var = T.imatrix(name='inputs')
         num_data, max_length = X_train.shape
