@@ -2,9 +2,20 @@ __author__ = 'max'
 
 import lasagne
 import lasagne.nonlinearities as nonlinearities
-from lasagne.layers import Gate, SliceLayer
+from lasagne.layers import Gate, SliceLayer, MergeLayer
 from lasagne_nlp.networks.crf import CRFLayer
 from lasagne_nlp.networks.highway import HighwayDenseLayer
+
+
+class SliceCustomLayer(MergeLayer):
+    def get_output_for(self, inputs, **kwargs):
+        incomming = inputs[0]
+        mask = inputs[1]
+        slice_custom = (incomming * mask).sum(axis=1)
+        return slice_custom
+
+    def get_output_shape_for(self, input_shapes):
+        return input_shapes[0][:-1]
 
 
 def build_BiRNN(incoming, num_units, mask=None, grad_clipping=0, nonlinearity=nonlinearities.tanh,
@@ -144,8 +155,10 @@ def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precomput
     print 'Forward-backward'
     print lstm_forward.output_shape
     print lstm_backward.output_shape
-    lstm_forward = SliceLayer(lstm_forward, indices=-1, axis=1)
-    lstm_backward = SliceLayer(lstm_backward, indices=-1, axis=1)
+    #lstm_forward = SliceLayer(lstm_forward, indices=-1, axis=1)
+    #lstm_backward = SliceLayer(lstm_backward, indices=-1, axis=1)
+    lstm_forward = SliceCustomLayer([lstm_forward, mask])
+    lstm_backward = SliceLayer(lstm_backward, indices=1, axis=1)
     print 'Slice'
     print lstm_forward.output_shape
     print lstm_backward.output_shape
