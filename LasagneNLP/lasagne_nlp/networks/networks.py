@@ -15,7 +15,7 @@ class SliceCustomLayer(MergeLayer):
         return slice_custom
 
     def get_output_shape_for(self, input_shapes):
-        return input_shapes[0][:-1]
+        return input_shapes[0][:-2] + input_shapes[0][-1:]
 
 
 def build_BiRNN(incoming, num_units, mask=None, grad_clipping=0, nonlinearity=nonlinearities.tanh,
