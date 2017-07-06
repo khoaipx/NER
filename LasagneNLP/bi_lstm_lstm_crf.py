@@ -107,8 +107,6 @@ def main():
         data_processor.generate_mask_slice_data(last_index_c_train, last_index_c_dev, last_index_c_test,
                                                 X_train.shape[0], X_dev.shape[0], X_test.shape[0], X_train.shape[1],
                                                 C_train.shape[2], num_units_char)
-    print 'Shape mask_c'
-    print np.shape(mask_c_train)
     num_labels = label_alphabet.size() - 1
     #print np.shape(X_train), np.shape(Y_train), np.shape(mask_train), np.shape(embedd_table), np.shape(label_alphabet),\
     #    np.shape(C_train), np.shape(char_embedd_table)
@@ -191,7 +189,6 @@ def main():
                               [loss_eval, corr_eval, num_tokens, prediction_eval])
     #train_fn = theano.function([char_input_var], [energies_train])
     # Finally, launch the training loop.
-    """
     logger.info(
         "Start training: %s with regularization: %s(%f), dropout: %s, fine tune: %s (#training data: %d, batch size: %d, clip: %.1f, peepholes: %s)..." \
         % (
@@ -220,11 +217,11 @@ def main():
         start_time = time.time()
         num_back = 0
         train_batches = 0
-        for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train, masks_c=mask_c_train, char_inputs=C_train,
+        for batch in utils.iterate_minibatches(X_train, Y_train, masks=mask_train, masks_c=mask_c_train, masks_slice=mask_slice_c_train, char_inputs=C_train,
                                                batch_size=batch_size, shuffle=True):
-            inputs, targets, masks, masks_c, char_inputs = batch
+            inputs, targets, masks, masks_c, masks_slice_c, char_inputs = batch
             #print np.shape(inputs), np.shape(masks), np.shape(char_inputs)
-            err, corr, num = train_fn(inputs, targets, masks, masks_c, char_inputs)
+            err, corr, num = train_fn(inputs, targets, masks, masks_c, char_inputs, masks_slice_c)
             train_err += err * inputs.shape[0]
             train_corr += corr
             train_total += num
@@ -252,9 +249,9 @@ def main():
         dev_corr = 0.0
         dev_total = 0
         dev_inst = 0
-        for batch in utils.iterate_minibatches(X_dev, Y_dev, masks=mask_dev, masks_c=mask_c_dev, char_inputs=C_dev, batch_size=batch_size):
-            inputs, targets, masks, masks_c, char_inputs = batch
-            err, corr, num, predictions = eval_fn(inputs, targets, masks, masks_c, char_inputs)
+        for batch in utils.iterate_minibatches(X_dev, Y_dev, masks=mask_dev, masks_c=mask_c_dev, masks_slice=mask_slice_c_dev, char_inputs=C_dev, batch_size=batch_size):
+            inputs, targets, masks, masks_c, masks_slice_c, char_inputs = batch
+            err, corr, num, predictions = eval_fn(inputs, targets, masks, masks_c, char_inputs, masks_slice_c)
             dev_err += err * inputs.shape[0]
             dev_corr += corr
             dev_total += num
@@ -286,10 +283,10 @@ def main():
             test_corr = 0.0
             test_total = 0
             test_inst = 0
-            for batch in utils.iterate_minibatches(X_test, Y_test, masks=mask_test, masks_c=mask_c_test, char_inputs=C_test,
+            for batch in utils.iterate_minibatches(X_test, Y_test, masks=mask_test, masks_c=mask_c_test, masks_slice=mask_slice_c_test, char_inputs=C_test,
                                                    batch_size=batch_size):
-                inputs, targets, masks, masks_c, char_inputs = batch
-                err, corr, num, predictions = eval_fn(inputs, targets, masks, masks_c, char_inputs)
+                inputs, targets, masks, masks_c, masks_slice_c, char_inputs = batch
+                err, corr, num, predictions = eval_fn(inputs, targets, masks, masks_c, char_inputs, masks_slice_c)
                 test_err += err * inputs.shape[0]
                 test_corr += corr
                 test_total += num
@@ -326,7 +323,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
 
 
 def test():
