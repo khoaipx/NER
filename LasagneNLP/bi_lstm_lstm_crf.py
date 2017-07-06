@@ -221,7 +221,7 @@ def main():
                                                batch_size=batch_size, shuffle=True):
             inputs, targets, masks, masks_c, masks_slice_c, char_inputs = batch
             #print np.shape(inputs), np.shape(masks), np.shape(char_inputs)
-            err, corr, num = train_fn(inputs, targets, masks, masks_c, char_inputs, masks_slice_c, allow_input_downcast=True)
+            err, corr, num = train_fn(inputs, targets, masks, masks_c, char_inputs, masks_slice_c)
             train_err += err * inputs.shape[0]
             train_corr += corr
             train_total += num
