@@ -105,11 +105,14 @@ def iterate_minibatches(inputs, targets, masks=None, masks_c=None, char_inputs=N
         assert len(inputs) == len(masks)
     if masks_c is not None:
         assert len(inputs) == len(masks_c)
-    print type(masks)
-    print type(masks_c)
+    print np.shape(masks)
+    print np.shape(masks_c)
     if char_inputs is not None:
         assert len(inputs) == len(char_inputs)
-    print type(char_inputs)
+    print np.shape(char_inputs)
+    print masks[0]
+    print masks_c[0]
+    print char_inputs[0]
     if shuffle:
         indices = np.arange(len(inputs))
         np.random.shuffle(indices)
