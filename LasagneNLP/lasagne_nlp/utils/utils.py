@@ -121,7 +121,8 @@ def iterate_minibatches(inputs, targets, masks=None, masks_c=None, char_inputs=N
             excerpt = indices[start_idx:start_idx + batch_size]
         else:
             excerpt = slice(start_idx, start_idx + batch_size)
-        yield inputs[excerpt], targets[excerpt], (None if masks is None else masks[excerpt]), (None if masks_c is None else masks_c[excerpt])\
+        yield inputs[excerpt], targets[excerpt], (None if masks is None else masks[excerpt]), \
+              (None if masks_c is None else masks_c[excerpt]), \
               (None if char_inputs is None else char_inputs[excerpt])
 
 
