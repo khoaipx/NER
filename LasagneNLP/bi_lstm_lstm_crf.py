@@ -70,9 +70,9 @@ def main():
         layer_mask_slice_input = lasagne.layers.InputLayer(shape=(None, max_sent_length, max_char_length, num_units_char),
                                                      input_var=mask_slice_var, name='mask-slice-input')
         print 'mask slice layer'
-        print layer_mask_slice_input.shape
+        print layer_mask_slice_input.output_shape
         layer_mask_slice_input = lasagne.layers.reshape(layer_mask_slice_input, (-1, [2], [3]))
-        print layer_mask_slice_input.shape
+        print layer_mask_slice_input.output_shape
         return layer_mask_slice_input
 
     logger = utils.get_logger("BiLSTM-LSTM-CRF")
