@@ -316,6 +316,13 @@ def build_embedd_table(word_alphabet, embedd_dict, embedd_dim, caseless):
     return embedd_table
 
 
+def generate_last_index(mask_c_train, mask_c_dev, mask_c_test):
+    last_index_c_train = np.sum(mask_c_train, axis=1) - 1
+    last_index_c_dev = np.sum(mask_c_dev, axis=1) - 1
+    last_index_c_test = np.sum(mask_c_test, axis=1) - 1
+    return last_index_c_train, last_index_c_dev, last_index_c_test
+
+
 def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=1, label_column=4,
                                    label_name='pos', oov='embedding', fine_tune=False, embedding="word2Vec",
                                    embedding_path=None,

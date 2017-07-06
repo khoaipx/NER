@@ -91,7 +91,8 @@ def main():
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                               use_character=True)
-    print np.shape(mask_dev)
+    print 'Shape mask_c'
+    print np.shape(mask_c_train)
     num_labels = label_alphabet.size() - 1
     #print np.shape(X_train), np.shape(Y_train), np.shape(mask_train), np.shape(embedd_table), np.shape(label_alphabet),\
     #    np.shape(C_train), np.shape(char_embedd_table)
