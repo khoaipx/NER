@@ -96,8 +96,8 @@ def main():
                                                                                               use_character=True)
     mask_slice_c_train, mask_slice_c_dev, mask_slice_c_test = \
         data_processor.generate_mask_slice_data(last_index_c_train, last_index_c_dev, last_index_c_test,
-                                                X_train.shape[0], X_dev.shape[0], X_test.shape[0], X_train.shape[0],
-                                                C_train.shape[1], num_units_char)
+                                                X_train.shape[0], X_dev.shape[0], X_test.shape[0], X_train.shape[1],
+                                                C_train.shape[2], num_units_char)
     """
     print 'Shape mask_c'
     print np.shape(mask_c_train)
