@@ -110,7 +110,7 @@ def build_BiLSTM(incoming, num_units, mask=None, grad_clipping=0, precompute_inp
     return concat
 
 
-def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precompute_input=True, peepholes=False, dropout=True,
+def build_BiLSTM_char(incoming, layer_mask_slice, num_units, mask=None, grad_clipping=0, precompute_input=True, peepholes=False, dropout=True,
                  in_to_out=False):
     # construct the forward and backward rnns. Now, Ws are initialized by Glorot initializer with default arguments.
     # Need to try other initializers for specific tasks.
@@ -157,7 +157,7 @@ def build_BiLSTM_char(incoming, num_units, mask=None, grad_clipping=0, precomput
     print lstm_backward.output_shape
     #lstm_forward = SliceLayer(lstm_forward, indices=-1, axis=1)
     #lstm_backward = SliceLayer(lstm_backward, indices=-1, axis=1)
-    lstm_forward = SliceCustomLayer([lstm_forward, mask])
+    lstm_forward = SliceCustomLayer([lstm_forward, layer_mask_slice])
     lstm_backward = SliceLayer(lstm_backward, indices=1, axis=1)
     print 'Slice'
     print lstm_forward.output_shape
@@ -391,7 +391,7 @@ def build_BiLSTM_CNN(incoming1, incoming2, num_units, mask=None, grad_clipping=0
                         precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
 
 
-def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask=None, mask_c=None, grad_clipping=0,
+def build_BiLSTM_LSTM(incoming1, incoming2, layer_mask_slice, num_units_word, num_units_char, mask=None, mask_c=None, grad_clipping=0,
                       precompute_input=True, peepholes=False, dropout=True, in_to_out=False):
     # first get some necessary dimensions or parameters
     _, sent_length, _ = incoming2.output_shape
@@ -402,7 +402,7 @@ def build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask
     if dropout:
         incoming1 = lasagne.layers.DropoutLayer(incoming1, p=0.5)
 
-    output_lstm_layer = build_BiLSTM_char(incoming1, num_units_char, mask=mask_c, grad_clipping=grad_clipping, peepholes=peepholes,
+    output_lstm_layer = build_BiLSTM_char(incoming1, layer_mask_slice, num_units_char, mask=mask_c, grad_clipping=grad_clipping, peepholes=peepholes,
                                      precompute_input=precompute_input, dropout=dropout, in_to_out=in_to_out)
     print 'Char-LSTM'
     print output_lstm_layer.output_shape
@@ -481,9 +481,9 @@ def build_BiLSTM_CNN_CRF(incoming1, incoming2, num_units, num_labels, mask=None,
     return CRFLayer(bi_lstm_cnn, num_labels, mask_input=mask)
 
 
-def build_BiLSTM_LSTM_CRF(incoming1, incoming2, num_units_word, num_units_char, num_labels, mask=None, mask_c=None, grad_clipping=0,
+def build_BiLSTM_LSTM_CRF(incoming1, incoming2, layer_mask_slice, num_units_word, num_units_char, num_labels, mask=None, mask_c=None, grad_clipping=0,
                           precompute_input=True, peepholes=False, dropout=True, in_to_out=False):
-    bi_lstm_lstm = build_BiLSTM_LSTM(incoming1, incoming2, num_units_word, num_units_char, mask=mask, mask_c=mask_c,
+    bi_lstm_lstm = build_BiLSTM_LSTM(incoming1, incoming2, layer_mask_slice, num_units_word, num_units_char, mask=mask, mask_c=mask_c,
                                     grad_clipping=grad_clipping, precompute_input=precompute_input, peepholes=peepholes,
                                     dropout=dropout, in_to_out=in_to_out)
     #print bi_lstm_lstm.output_shape

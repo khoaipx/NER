@@ -66,6 +66,12 @@ def main():
         #layer_char_input = lasagne.layers.DimshuffleLayer(layer_char_embedding, pattern=(0, 2, 1))
         return layer_char_embedding
 
+    def construct_mask_slice_layer():
+        layer_mask_slice_input = lasagne.layers.InputLayer(shape=(None, max_sent_length, max_char_length, num_units_char),
+                                                     input_var=mask_slice_var, name='mask-slice-input')
+        layer_mask_slice_input = lasagne.layers.reshape(layer_mask_slice_input, (-1, [2], [3]))
+        return layer_mask_slice_input
+
     logger = utils.get_logger("BiLSTM-LSTM-CRF")
     fine_tune = args.fine_tune
     oov = args.oov
@@ -98,7 +104,6 @@ def main():
         data_processor.generate_mask_slice_data(last_index_c_train, last_index_c_dev, last_index_c_test,
                                                 X_train.shape[0], X_dev.shape[0], X_test.shape[0], X_train.shape[1],
                                                 C_train.shape[2], num_units_char)
-    """
     print 'Shape mask_c'
     print np.shape(mask_c_train)
     num_labels = label_alphabet.size() - 1
@@ -109,6 +114,7 @@ def main():
     target_var = T.imatrix(name='targets')
     mask_var = T.matrix(name='masks', dtype=theano.config.floatX)
     mask_c_var = T.tensor3(name='masks-c', dtype=theano.config.floatX)
+    mask_slice_var = T.tensor4(name='masks-slice', dtype=theano.config.floatX)
     if fine_tune:
         input_var = T.imatrix(name='inputs')
         num_data, max_length = X_train.shape
@@ -130,6 +136,7 @@ def main():
     layer_incoming2 = construct_input_layer()
     #print 'Word'
     #print layer_incoming2.output_shape
+    layer_mask_slice = construct_mask_slice_layer()
 
     layer_mask = lasagne.layers.InputLayer(shape=(None, max_length), input_var=mask_var, name='mask')
     layer_mask_c = lasagne.layers.InputLayer(shape=(None, max_length, max_char_length), input_var=mask_c_var, name='mask-c')
@@ -139,7 +146,7 @@ def main():
 
     # construct bi-rnn-cnn
 
-    bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
+    bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, layer_mask_slice, num_units_word, num_units_char, num_labels,
                                             mask=layer_mask, mask_c=layer_mask_c, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
     #bi_lstm_lstm_crf = build_BiLSTM(layer_incoming1, num_units_char, mask=layer_mask, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
     logger.info("Network structure: num_units_word=%d, num_units_char=%d" % (num_units_word, num_units_char))
@@ -174,13 +181,14 @@ def main():
     updates = utils.create_updates(loss_train, params, update_algo, learning_rate, momentum=momentum)
 
     # Compile a function performing a training step on a mini-batch
-    train_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var], [loss_train, corr_train, num_tokens],
+    train_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var, mask_slice_var], [loss_train, corr_train, num_tokens],
                                updates=updates)
     # Compile a second function evaluating the loss and accuracy of network
-    eval_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var],
+    eval_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var, mask_slice_var],
                               [loss_eval, corr_eval, num_tokens, prediction_eval])
     #train_fn = theano.function([char_input_var], [energies_train])
     # Finally, launch the training loop.
+    """
     logger.info(
         "Start training: %s with regularization: %s(%f), dropout: %s, fine tune: %s (#training data: %d, batch size: %d, clip: %.1f, peepholes: %s)..." \
         % (
@@ -305,7 +313,7 @@ def main():
         if update_algo != 'adadelta':
             lr = learning_rate / (1.0 + epoch * decay_rate)
             updates = utils.create_updates(loss_train, params, update_algo, lr, momentum=momentum)
-            train_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var],
+            train_fn = theano.function([input_var, target_var, mask_var, mask_c_var, char_input_var, mask_slice_var],
                                         [loss_train, corr_train, num_tokens],
                                         updates=updates)
 
