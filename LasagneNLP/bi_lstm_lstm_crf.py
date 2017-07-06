@@ -81,16 +81,24 @@ def main():
     gamma = args.gamma
     output_predict = args.output_prediction
     dropout = args.dropout
+    num_units_word = args.num_units_word
+    num_units_char = args.num_units_char
     print "Dropout: " + str(dropout)
 
     X_train, Y_train, mask_train, X_dev, Y_dev, mask_dev, X_test, Y_test, mask_test, \
     embedd_table, label_alphabet, \
-    C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test = data_processor.load_dataset_sequence_labeling(train_path, dev_path,
+    C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test, \
+    last_index_c_train, last_index_c_dev, last_index_c_test = data_processor.load_dataset_sequence_labeling(train_path, dev_path,
                                                                                               test_path, oov=oov,
                                                                                               fine_tune=fine_tune,
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                               use_character=True)
+    mask_slice_c_train, mask_slice_c_dev, mask_slice_c_test = \
+        data_processor.generate_mask_slice_data(last_index_c_train, last_index_c_dev, last_index_c_test,
+                                                X_train.shape[0], X_dev.shape[0], X_test.shape[0], X_train.shape[0],
+                                                C_train.shape[1], num_units_char)
+    """
     print 'Shape mask_c'
     print np.shape(mask_c_train)
     num_labels = label_alphabet.size() - 1
@@ -130,8 +138,6 @@ def main():
     #print layer_mask.output_shape
 
     # construct bi-rnn-cnn
-    num_units_word = args.num_units_word
-    num_units_char = args.num_units_char
 
     bi_lstm_lstm_crf = build_BiLSTM_LSTM_CRF(layer_incoming1, layer_incoming2, num_units_word, num_units_char, num_labels,
                                             mask=layer_mask, mask_c=layer_mask_c, grad_clipping=grad_clipping, peepholes=peepholes, dropout=dropout)
@@ -309,7 +315,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
 
 
 def test():

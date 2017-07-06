@@ -317,9 +317,9 @@ def build_embedd_table(word_alphabet, embedd_dict, embedd_dim, caseless):
 
 
 def generate_last_index(mask_c_train, mask_c_dev, mask_c_test):
-    last_index_c_train = np.sum(mask_c_train, axis=1) - 1
-    last_index_c_dev = np.sum(mask_c_dev, axis=1) - 1
-    last_index_c_test = np.sum(mask_c_test, axis=1) - 1
+    last_index_c_train = np.sum(mask_c_train, axis=2) - 1
+    last_index_c_dev = np.sum(mask_c_dev, axis=2) - 1
+    last_index_c_test = np.sum(mask_c_test, axis=2) - 1
     return last_index_c_train, last_index_c_dev, last_index_c_test
 
 
@@ -386,9 +386,10 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
                                                                             word_sentences_test,
                                                                             max_length) if use_character else (
             None, None, None, None)
+        last_index_c_train, last_index_c_dev, last_index_c_test = generate_last_index(mask_c_train, mask_c_dev, mask_c_test)
         return X_train, Y_train, mask_train, X_dev, Y_dev, mask_dev, X_test, Y_test, mask_test, \
                build_embedd_table(word_alphabet, embedd_dict, embedd_dim, caseless), label_alphabet, \
-               C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test
+               C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test, last_index_c_train, last_index_c_dev, last_index_c_test
 
     def construct_tensor_not_fine_tune(word_sentences, label_index_sentences, unknown_embedd, embedd_dict,
                                        embedd_dim, caseless):
@@ -634,3 +635,19 @@ def load_dataset_parsing(train_path, dev_path, test_path, word_column=1, pos_col
            X_test, POS_test, Head_test, Type_test, mask_test, \
            embedd_table, word_alphabet, pos_alphabet, type_alphabet, \
            C_train, C_dev, C_test, char_embedd_table
+
+
+def generate_mask_slice(last_index, num_data, max_length, max_length_char, num_units):
+    mask_slice = np.zeros((num_data, max_length, max_length_char, num_units))
+    for i in range(num_data):
+        for j in range(max_length):
+            mask_slice[i][int(last_index[i][j])] = np.ones(num_units)
+    return mask_slice
+
+
+def generate_mask_slice_data(last_index_c_train, last_index_c_dev, last_index_c_test, num_data_train, num_data_dev,
+                             num_data_test, max_length, max_length_char, num_units):
+    mask_slice_c_train = generate_mask_slice(last_index_c_train, num_data_train, max_length, max_length_char, num_units)
+    mask_slice_c_dev = generate_mask_slice(last_index_c_dev, num_data_dev, max_length, max_length_char, num_units)
+    mask_slice_c_test = generate_mask_slice(last_index_c_test, num_data_test, max_length, max_length_char, num_units)
+    return mask_slice_c_train, mask_slice_c_dev, mask_slice_c_test
