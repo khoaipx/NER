@@ -103,10 +103,6 @@ def iterate_minibatches(inputs, targets, masks=None, char_inputs=None, batch_siz
     assert len(inputs) == len(targets)
     if masks is not None:
         assert len(inputs) == len(masks)
-    if masks_c is not None:
-        assert len(inputs) == len(masks_c)
-    if masks_slice is not None:
-        assert len(inputs) == len(masks_slice)
     if char_inputs is not None:
         assert len(inputs) == len(char_inputs)
     if shuffle:
