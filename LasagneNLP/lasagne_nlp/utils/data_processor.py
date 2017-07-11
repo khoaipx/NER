@@ -389,7 +389,7 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
         last_index_c_train, last_index_c_dev, last_index_c_test = generate_last_index(mask_c_train, mask_c_dev, mask_c_test)
         return X_train, Y_train, mask_train, X_dev, Y_dev, mask_dev, X_test, Y_test, mask_test, \
                build_embedd_table(word_alphabet, embedd_dict, embedd_dim, caseless), label_alphabet, \
-               C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test, last_index_c_train, last_index_c_dev, last_index_c_test
+               C_train, C_dev, C_test, char_embedd_table
 
     def construct_tensor_not_fine_tune(word_sentences, label_index_sentences, unknown_embedd, embedd_dict,
                                        embedd_dim, caseless):
