@@ -6,3 +6,6 @@ LasagneNLP/tmp/*
 */tmp/*
 */logs/*
 .DS_Store
+LasagneNLP/data/Vie_Skip_Gram_300.txt
+LasagneNLP/data/Vie_Skip_Gram_300_new.txt
+LasagneNLP/data/word2vec_mini.txt
