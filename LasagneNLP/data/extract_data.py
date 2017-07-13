@@ -26,7 +26,7 @@ def write_file(sentences, out_file):
     writer.close()
 
 
-def main():
+def main_ner():
     raw_data = '/home/khoaipx/Downloads/vlsp_corpus.txt'
     sentences = read_data(raw_data)
     print 'Train: ', len(sentences[:14861])
@@ -37,5 +37,16 @@ def main():
     write_file(sentences[16861:], 'test.txt')
 
 
+def main_pos():
+    raw_data = 'POS_NEW.txt'
+    sentences = read_data(raw_data)
+    print 'Train: ', len(sentences[:7268])
+    write_file(sentences[:7268], 'train_pos.txt')
+    print 'Dev: ', len(sentences[7268:8306])
+    write_file(sentences[7268:8306], 'dev_pos.txt')
+    print 'Test: ', len(sentences[8306:])
+    write_file(sentences[8306:], 'test_pos.txt')
+
+
 if __name__ == '__main__':
-    main()
+    main_pos()
