@@ -62,6 +62,7 @@ def read_conll_sequence_labeling(path, word_alphabet, label_alphabet, word_colum
                 label_ids = []
             else:
                 tokens = line.strip().split()
+                print tokens
                 word = tokens[word_column]
                 label = tokens[label_column]
 
