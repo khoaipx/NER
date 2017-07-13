@@ -4978,11 +4978,11 @@ Tanaka	Np
 0	M
 (	(
 21	M
-	
+/	/
 17	M
 ,	,
 21	M
-	
+/	/
 18	M
 )	)
 .	.
@@ -12605,7 +12605,7 @@ số	N
 37	M
 ra	V
 ngày	N
-18	
+18	M
 -	-
 9	M
 -	-
@@ -15260,7 +15260,7 @@ luôn	R
 nước	N
 700.000	M
 đ	Nu
-	
+/	/
 tháng	N
 .	.
 
@@ -15980,7 +15980,7 @@ lương	N
 đến	E
 150.000	M
 đ	Nu
-	M
+/	/
 suất	N
 hát	V
 mướt_mồ_hôi	X
@@ -18239,14 +18239,14 @@ má	N
 tách	N
 trà	N
 nóng_hổi	A
-	
+/	/
 Có	V
 trăng	N
 làm	V
 đường	N
 sóng_sánh	V
 trôi	V
-	
+/	/
 Trăng	N
 pha	V
 nỗi	Nc
@@ -18254,7 +18254,7 @@ nhớ	V
 sao	P
 buồn	A
 quá	R
-	
+/	/
 Biết	V
 đến	E
 bao_giờ	P
@@ -19194,9 +19194,9 @@ hàng	R
 chục	M
 triệu	M
 đồng	Nu
-	
+/	/
 vụ	N
-	
+/	/
 ha	Nu
 .	.
 
@@ -19848,7 +19848,7 @@ có	V
 ít_nhất	X
 5	M
 tấn	Nu
-	
+/	/
 ha	Nu
 .	.
 
@@ -20076,7 +20076,7 @@ thu_hoạch	V
 được	V
 8	M
 tấn	Nu
-	
+/	/
 ha	Nu
 chứ	C
 có	V
@@ -20946,7 +20946,7 @@ chỉ	R
 cỡ	N
 1,7	M
 tấn	Nu
-	
+/	/
 ha	Nu
 .	.
 
@@ -21027,7 +21027,7 @@ khoảng	N
 -	-
 5	M
 tấn	Nu
-	
+/	/
 ha	Nu
 .	.
 
@@ -24242,7 +24242,7 @@ thời_gian	N
 chỉ	R
 tám	M
 tiếng	Nu
-	
+/	/
 ngày	Nu
 ,	,
 nhưng	C
@@ -24254,7 +24254,7 @@ làm	V
 đến	E
 16	M
 tiếng	Nu
-	
+/	/
 ngày	Nu
 ,	,
 thêm	V
@@ -26933,7 +26933,7 @@ làm_giàu	V
 bằng	E
 nghề	N
 này	P
-.	
+.	.
 
 Trời	N
 nắng	N
@@ -35899,7 +35899,7 @@ lên	V
 5	M
 ngàn	M
 đồng	N
-	
+/	/
 lít	Nu
 ,	,
 con	Nc
@@ -37380,7 +37380,7 @@ chỉ	R
 khoảng	N
 300.000	M
 đ	Nu
-	
+/	/
 tháng	N
 .	.
 
@@ -37868,7 +37868,7 @@ chỉ	R
 tới	T
 600nghìn	M
 đồng	Nu
-	
+/	/
 tháng	N
 .	.
 
@@ -40061,7 +40061,7 @@ bán	V
 lên	V
 5.800	M
 đồng	Nu
-	
+/	/
 kg	Nu
 ,	,
 trong	E
@@ -40074,7 +40074,7 @@ năm	N
 chỉ	R
 3.200	M
 đồng	Nu
-	
+/	/
 kg	Nu
 ...	...
 
@@ -40302,7 +40302,7 @@ lên	V
 tấn	Nu
 mía	N
 cây	N
-	
+/	/
 ngày	N
 ,	,
 với	E
@@ -40507,7 +40507,7 @@ giám_sát	V
 Qua	E
 kiểm_tra	V
 34	M
-	
+/	/
 44	M
 nhà_máy	N
 đường	N
@@ -40887,7 +40887,7 @@ phải	V
 nhưng	C
 chỉ	R
 2	M
-	
+/	/
 34	M
 nhà_máy	N
 thực_hiện	V
@@ -40972,7 +40972,7 @@ sản_xuất	V
 Công_văn	N
 số	N
 132	M
-	
+/	/
 TB	Y
 -	-
 )	)
@@ -41116,7 +41116,7 @@ mang	V
 4.725	M
 triệu	M
 đồng	Nu
-	
+/	/
 6.500	M
 triệu	M
 đồng	Nu
@@ -48888,7 +48888,7 @@ tương_đương	A
 6	M
 kg	Nu
 gạo	N
-	
+/	/
 ngày	N
 ,	,
 giúp	V
@@ -51365,7 +51365,7 @@ chỉ	V
 -	-
 400	M
 tấn	Nu
-	
+/	/
 tàu	N
 .	.
 
@@ -51391,7 +51391,7 @@ trọng_tải	N
 -	-
 900	M
 tấn	Nu
-	
+/	/
 tàu	N
 để	E
 chạy	V
@@ -52052,9 +52052,9 @@ hơn	A
 1	M
 triệu	M
 đồng	Nu
-	
+/	/
 người	N
-	
+/	/
 tháng	N
 .	.
 
@@ -58708,7 +58708,7 @@ khoảng	N
 3	M
 triệu	M
 đồng	Nu
-	
+/	/
 tháng	N
 ,	,
 nếu	C
@@ -59690,7 +59690,7 @@ chỉ	R
 40	M
 người	N
 đi	V
-	
+/	/
 năm	N
 ,	,
 từ	E
@@ -59702,7 +59702,7 @@ khoảng	N
 -	-
 400	M
 người	N
-	
+/	/
 năm	N
 .	.
 
@@ -59724,7 +59724,7 @@ con_số	N
 -	-
 600	M
 người	N
-	
+/	/
 năm	N
 .	.
 
@@ -59796,7 +59796,7 @@ cũng	R
 2	M
 tỉ	N
 đồng	Nu
-	
+/	/
 năm	N
 .	.
 
@@ -60377,9 +60377,9 @@ bình_quân	A
 từ	E
 180	M
 USD	Nu
-	
+/	/
 người	N
-	
+/	/
 tháng	N
 (	(
 đi	V
@@ -60389,9 +60389,9 @@ lần	N
 -	-
 210	M
 USD	Nu
-	
+/	/
 người	N
-	
+/	/
 tháng	N
 (	(
 đi	V
@@ -60587,7 +60587,7 @@ môi_giới	V
 một	M
 tháng	N
 lương	N
-	
+/	/
 năm	N
 làm_việc	V
 ,	,
@@ -62359,7 +62359,7 @@ bé	N
 tuổi	N
 ,	,
 đứa	Nc
-conN	
+con	N
 trai	N
 duy_nhất	A
 của	E
@@ -70566,7 +70566,7 @@ Máy	N
 lọc	V
 200.000	M
 đ	Nu
-	
+/	/
 cái	Nc
 mua	V
 ở	E
@@ -71213,7 +71213,7 @@ lên	V
 -	-
 90	M
 km	Nu
-	
+/	/
 giờ	Nu
 ,	,
 cơ	N
@@ -73961,7 +73961,7 @@ với	E
 giá	N
 3	M
 USD	Nu
-	M
+/	/
 viên	Nc
 .	.
 
@@ -79119,7 +79119,7 @@ tốc_độ	N
 hàng	R
 trăm	M
 km	Nu
-	
+/	/
 giờ	Nu
 từ	E
 trên	N
@@ -79647,7 +79647,7 @@ Nội_Bài	Np
 gần	A
 như	C
 24	M
-	
+/	/
 24	M
 g	Nu
 lúc_nào	P
@@ -88837,7 +88837,7 @@ lên	R
 65	M
 tỉ	M
 đồng	Nu
-	
+/	/
 năm	N
 .	.
 
@@ -88866,9 +88866,9 @@ là	V
 6,5	M
 triệu	M
 đồng	Nu
-	
+/	/
 người	N
-	
+/	/
 năm	N
 và	C
 dự_kiến	V
@@ -92548,11 +92548,11 @@ Tiết	Np
 0	M
 (	(
 21	M
-	
+/	/
 17	M
 ,	,
 21	M
-	
+/	/
 15	M
 )	)
 và	C
@@ -92580,11 +92580,11 @@ hai	M
 ván	N
 (	(
 21	M
-	
+/	/
 16	M
 và	C
 21	M
-	
+/	/
 12	M
 )	)
 .	.
@@ -97952,7 +97952,7 @@ phim_ảnh	N
 duy_trì	V
 106	M
 ngày	N
-	
+/	/
 năm	N
 chiếu_phim	V
 trong	A
@@ -101046,7 +101046,7 @@ Tuyên_Quang	Np
 thương_binh	N
 hạng	N
 4	M
-	
+/	/
 4	M
 -	-
 qua	E
@@ -102972,7 +102972,7 @@ giá	N
 trên_dưới	N
 600.000	M
 đồng	Nu
-	
+/	/
 viên	Nc
 luôn	R
 làm	V
@@ -104351,7 +104351,7 @@ tăng	V
 -	-
 300.000	M
 đ	Nu
-	M
+/	/
 viên	Nc
 .	.
 
@@ -105381,7 +105381,7 @@ Olympia	Np
 với	E
 110	M
 điểm	N
-	
+/	/
 12	M
 câu	N
 hỏi	V
@@ -105395,7 +105395,7 @@ trước	E
 là	C
 90	M
 điểm	N
-	
+/	/
 12	M
 câu	N
 hỏi	V
@@ -109293,7 +109293,7 @@ tiền_lương	N
 2,7	M
 triệu	M
 đồng	Nu
-	
+/	/
 tháng	N
 vợ	N
 nhận	V
@@ -110463,7 +110463,7 @@ giá	N
 trung_bình	A
 10	M
 USD	Nu
-	
+/	/
 cây	Nc
 thuốc	N
 hoặc	C
@@ -110878,34 +110878,34 @@ qua	V
 dòng	N
 sông	N
 nhỏ	A
-	
+/	/
 Thân_thương	A
 có	V
 ý	N
 lo	V
-	
+/	/
 Hỏi	V
 tôi	P
 người	N
 năm	N
 trước	A
-	
+/	/
 Còn	V
 yêu_dấu	V
 đợi_chờ	V
-	
+/	/
 Cám_ơn	V
 anh	Nc
 Trà_Buông	Np
-	
+/	/
 Yêu_thương	V
 như	C
 cải_lương	N
-	
+/	/
 Phấn_son	N
 và	C
 nước_mắt	N
-	
+/	/
 Lau	V
 khô	A
 là	C
@@ -122870,7 +122870,7 @@ sẽ	R
 giám_sát	V
 con	N
 24	M
-	
+/	/
 24	M
 ...	...
 ”	”
@@ -128497,7 +128497,7 @@ xóa	V
 mù_chữ	A
 :	:
 84	M
-	
+/	/
 84	M
 xã	N
 ,	,
@@ -128527,7 +128527,7 @@ PCGD	Ny
 THCS	Ny
 :	:
 76	M
-	
+/	/
 89	M
 xã	N
 ,	,
@@ -128547,7 +128547,7 @@ huyện	N
 U_Minh	Np
 có	V
 7	M
-	
+/	/
 7	M
 xã	N
 ,	,
@@ -131723,7 +131723,7 @@ lên	V
 đến	T
 1.500	M
 USD	Nu
-	
+/	/
 khóa	N
 ,	,
 chưa	R
@@ -133385,7 +133385,7 @@ chính_cống	A
 trình_độ	N
 văn_hóa	N
 9	M
-	
+/	/
 12	M
 ,	,
 trước	E
@@ -135683,7 +135683,7 @@ Aspirine	Np
 thuốc	N
 chữa_trị	V
 HIV	Ny
-	
+/	/
 AIDS	Ny
 và	C
 một_số	L
@@ -136611,7 +136611,7 @@ nhận	V
 -	-
 2,7triệu	M
 đồng	Nu
-	
+/	/
 tháng	N
 ...	...
 
@@ -136941,7 +136941,7 @@ nhỏ	A
 chừng	N
 15	M
 m2	Nu
-	
+/	/
 năm	N
 bố	N
 con	N
@@ -146566,7 +146566,7 @@ cái	N
 trở_lên	A
 60	M
 tệ	Nu
-	
+/	/
 áo	N
 ”	”
 (	(
@@ -146885,13 +146885,13 @@ giá	N
 sỉ	A
 80	M
 tệ	Nu
-	
+/	/
 dây	N
 ,	,
 mua_lẻ	V
 120	M
 tệ	Nu
-	
+/	/
 dây	N
 vẫn	R
 không	R
@@ -146913,7 +146913,7 @@ trên	A
 1,5	M
 triệu	N
 đồng	Nu
-	
+/	/
 dây	N
 .	.
 
@@ -147041,7 +147041,7 @@ nhầm	V
 :	:
 12	M
 tệ	Nu
-	
+/	/
 cái	Nc
 (	(
 24.000	M
@@ -147052,7 +147052,7 @@ còn	C
 mua_lẻ	V
 16	M
 tệ	Nu
-	
+/	/
 cái	Nc
 (	(
 32.000	M
@@ -147089,7 +147089,7 @@ bán	V
 giá	N
 380.000	M
 đồng	Nu
-	
+/	/
 hộp	N
 vì	E
 người	N
@@ -147439,7 +147439,7 @@ trên	A
 1	M
 triệu	M
 đồng	Nu
-	
+/	/
 món	N
 .	.
 
@@ -147464,7 +147464,7 @@ hét	V
 8,08	M
 triệu	M
 đồng	Nu
-	
+/	/
 bộ	N
 .	.
 
@@ -147496,7 +147496,7 @@ chỉ	R
 độ	N
 400	M
 tệ	Nu
-	
+/	/
 bộ	N
 !	!
 
@@ -154891,7 +154891,7 @@ từ	E
 -	-
 600.000	M
 đ	Nu
-	
+/	/
 viên	Nc
 ,	,
 có	V
@@ -154905,7 +154905,7 @@ lên	V
 đến	T
 900.000	M
 đ	Nu
-	
+/	/
 viên	Nc
 .	.
 
@@ -158709,7 +158709,7 @@ bò/Nđược	V
 32	M
 triệu	M
 đồng	Nu
-	
+/	/
 năm	N
 ;	;
 bình_quân	A
@@ -158727,7 +158727,7 @@ phụ	A
 thu_nhập	N
 1,5	M
 triệu	M
-	
+/	/
 tháng	N
 .	.
 
@@ -159409,7 +159409,7 @@ với	E
 giá	N
 2.000	M
 đồng	Nu
-	
+/	/
 đêm	N
 trong	E
 căn	Nc
@@ -159551,7 +159551,7 @@ giá	N
 -	-
 300.000	M
 đồng	Nu
-	
+/	/
 tháng	N
 .	.
 
@@ -159563,7 +159563,7 @@ giá	N
 -	-
 2.000	M
 đồng	Nu
-	
+/	/
 ngày	N
 hầu_hết	R
 đã	R
@@ -159670,7 +159670,7 @@ trọ	V
 có	V
 45.000	M
 đồng	Nu
-	
+/	/
 tháng	N
 ,	,
 trả	V
@@ -160011,7 +160011,7 @@ chỉ	R
 có	V
 2.000	M
 đồng	Nu
-	
+/	/
 ngày	N
 nhưng	C
 cậu	P
@@ -160165,7 +160165,7 @@ nói_thẳng	V
 “	“
 60.000	M
 đồng	Nu
-	
+/	/
 tháng	N
 .	.
 
@@ -160829,7 +160829,7 @@ bình_dân	N
 giá	N
 40.000	M
 đồng	Nu
-	
+/	/
 đêm	N
 ở	E
 khu	N
@@ -176091,7 +176091,7 @@ giá	N
 -	-
 30_triệu	M
 đồng	Nu
-	
+/	/
 bộ	Nc
 bằng	E
 vải	N
@@ -176105,7 +176105,7 @@ Mỹ	Np
 giá	N
 100	M
 USD	Nu
-	
+/	/
 m	Nu
 .	.
 
@@ -179580,7 +179580,7 @@ hoa_hồng	N
 1	M
 triệu	M
 đồng	Nu
-	
+/	/
 người	N
 ,	,
 
@@ -185744,7 +185744,7 @@ cô_giáo	N
 dù_rằng	E
 việc	N
 dạy_học	V
-đôi_khi	
+đôi_khi	R
 cũng	R
 gặp	V
 khó_khăn	N
@@ -189612,7 +189612,7 @@ mức	N
 lương	N
 15.840	M
 đài_tệ	Nu
-	
+/	/
 tháng	N
 và	C
 chỉ	R
@@ -197936,7 +197936,7 @@ phải	A
 -	-
 20.000	M
 đồng	Nu
-	
+/	/
 đĩa	N
 ,	,
 còn	C
@@ -197952,7 +197952,7 @@ cũng	R
 phải	V
 100.000	M
 đồng	Nu
-	
+/	/
 đĩa	N
 .	.
 
@@ -202924,7 +202924,7 @@ chỉ	R
 làm_việc	V
 tám	M
 tiếng	N
-	
+/	/
 ngày	N
 .	.
 
@@ -203598,7 +203598,7 @@ khoảng	A
 200	M
 USD	Nu
 )	)
-	
+/	/
 tháng	N
 )	)
 và	C
@@ -208446,7 +208446,7 @@ bí_thư	N
 Phúc	Np
 trực	V
 24	M
-	
+/	/
 24	M
 ở	E
 ủy_ban	N
@@ -216194,7 +216194,7 @@ với	E
 giá	N
 15.000	M
 đ	Nu
-	
+/	/
 ngày	N
 mà	C
 mẹ_con	N
@@ -224505,7 +224505,7 @@ hàng	R
 ngàn	M
 SV	Ny
 từ	E
-khắp	
+khắp	A
 mọi	A
 miền	N
 đất_nước	N
@@ -229464,7 +229464,7 @@ trên	A
 3	M
 triệu	M
 đồng	Nu
-	
+/	/
 tháng	N
 .	.
 
@@ -229609,7 +229609,7 @@ mặc	V
 dưới	A
 1	M
 triệu	M
-	
+/	/
 bộ	N
 ,	,
 lắp	V
@@ -229826,7 +229826,7 @@ lão	N
 quá	R
 20	M
 triệu	M
-	
+/	/
 tháng	N
 nên	C
 chơi	V
@@ -229841,7 +229841,7 @@ Chẳng_mấy_khi	X
 dưới	A
 1	M
 triệu	M
-	
+/	/
 con	N
 nên	C
 nhiều	A
@@ -230081,7 +230081,7 @@ Có	V
 ông	N
 tiêu	V
 hết	V
-20	
+20	M
 triệu	M
 hả	I
 ?	?
@@ -230685,7 +230685,7 @@ nước_hoa	N
 hơn	A
 10	M
 triệu	M
-	
+/	/
 lọ	N
 ,	,
 chàng	Nc
@@ -231340,7 +231340,7 @@ cô	Nc
 oshin	Nb
 1,5	M
 triệu	M
-	
+/	/
 tháng	N
 để	E
 giặt_giũ	V
@@ -231944,7 +231944,7 @@ chỉ	R
 có	V
 4	M
 năm	N
-	
+/	/
 khóa	N
 ”	”
 .	.
