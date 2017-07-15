@@ -96,7 +96,8 @@ def main():
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                              use_character=True)
-
+    np.save('tmp/embedd_table', embedd_table)
+    np.save('tmp/char_embedd_table', char_embedd_table)
     num_labels = label_alphabet.size() - 1
 
     logger.info("constructing network...")
@@ -115,7 +116,13 @@ def main():
     char_alphabet_size, char_embedd_dim = char_embedd_table.shape
     assert (max_length == max_sent_length)
     assert (num_data == num_data_char)
-
+    with open('tmp/config.ini', w) as f:
+        f.write('alphabet_size' + '\t' + str(alphabet_size) + '\n')
+        f.write('embedd_dim' + '\t' + str(embedd_dim) + '\n')
+        f.write('max_sent_length' + '\t' + str(max_sent_length) + '\n')
+        f.write('max_char_length' + '\t' + str(max_char_length) + '\n')
+        f.write('char_alphabet_size' + '\t' + str(char_alphabet_size) + '\n')
+        f.write('num_labels' + '\t' + str(num_labels) + '\n')
     # construct input and mask layers
     print 'Char'
     layer_incoming1 = construct_char_input_layer()
@@ -295,7 +302,7 @@ def main():
             train_fn = theano.function([input_var, target_var, mask_var, char_input_var],
                                         [loss_train, corr_train, num_tokens],
                                         updates=updates)
-
+    np.savez('weights', *lasagne.layers.get_all_param_values(bi_lstm_cnn_crf))
     # print best performance on test data.
     logger.info("final best loss test performance (at epoch %d)" % best_epoch_loss)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
