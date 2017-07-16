@@ -137,7 +137,8 @@ def main():
     bi_lstm_cnn_crf = build_BiLSTM_CNN_CRF(layer_incoming1, layer_incoming2, num_units, num_labels, mask=layer_mask,
                                            grad_clipping=grad_clipping, peepholes=peepholes, num_filters=num_filters,
                                            dropout=dropout)
-
+    print len(lasagne.layers.get_all_layers(bi_lstm_cnn_crf, treat_as_input=None))
+    """
     logger.info("Network structure: hidden=%d, filter=%d" % (num_units, num_filters))
 
     # compute loss
@@ -312,7 +313,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
 
 
 def test():
