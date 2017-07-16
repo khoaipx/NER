@@ -183,7 +183,7 @@ def main():
             grad_clipping,
             peepholes))
     num_batches = num_data / batch_size
-    num_epochs = 1000
+    num_epochs = 1
     best_loss = 1e+12
     best_acc = 0.0
     best_epoch_loss = 0
@@ -302,7 +302,10 @@ def main():
             train_fn = theano.function([input_var, target_var, mask_var, char_input_var],
                                         [loss_train, corr_train, num_tokens],
                                         updates=updates)
-    np.savez('weights', *lasagne.layers.get_all_param_values(bi_lstm_cnn_crf))
+    np.savez('tmp/weights', *lasagne.layers.get_all_param_values(bi_lstm_cnn_crf))
+    with np.load('tmp/weights') as f:
+        param_values = [f['arr_%d' % i] for i in range(len(f.files))]
+    lasagne.layers.set_all_param_values(bi_lstm_cnn_crf, param_values)
     # print best performance on test data.
     logger.info("final best loss test performance (at epoch %d)" % best_epoch_loss)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
