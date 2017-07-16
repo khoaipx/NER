@@ -303,7 +303,7 @@ def main():
                                         [loss_train, corr_train, num_tokens],
                                         updates=updates)
     np.savez('tmp/weights', *lasagne.layers.get_all_param_values(bi_lstm_cnn_crf))
-    with np.load('tmp/weights') as f:
+    with np.load('tmp/weights.npz') as f:
         param_values = [f['arr_%d' % i] for i in range(len(f.files))]
     lasagne.layers.set_all_param_values(bi_lstm_cnn_crf, param_values)
     # print best performance on test data.
