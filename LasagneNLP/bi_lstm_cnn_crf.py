@@ -137,7 +137,7 @@ def main():
     bi_lstm_cnn_crf = build_BiLSTM_CNN_CRF(layer_incoming1, layer_incoming2, num_units, num_labels, mask=layer_mask,
                                            grad_clipping=grad_clipping, peepholes=peepholes, num_filters=num_filters,
                                            dropout=dropout)
-    print len(lasagne.layers.get_all_layers(bi_lstm_cnn_crf, treat_as_input=None))
+    print lasagne.layers.get_all_layers(bi_lstm_cnn_crf, treat_as_input=None)
     """
     logger.info("Network structure: hidden=%d, filter=%d" % (num_units, num_filters))
 
