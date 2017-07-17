@@ -96,7 +96,7 @@ def main():
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                              use_character=True)
-    np.save('tmp/embedd_table', embedd_table)
+    """np.save('tmp/embedd_table', embedd_table)
     np.save('tmp/char_embedd_table', char_embedd_table)
     num_labels = label_alphabet.size() - 1
 
@@ -122,6 +122,7 @@ def main():
         f.write('max_sent_length' + '\t' + str(max_sent_length) + '\n')
         f.write('max_char_length' + '\t' + str(max_char_length) + '\n')
         f.write('char_alphabet_size' + '\t' + str(char_alphabet_size) + '\n')
+        f.write('char_embedd_dim' + '\t' + str(char_embedd_dim) + '\n')
         f.write('num_labels' + '\t' + str(num_labels) + '\n')
     # construct input and mask layers
     print 'Char'
@@ -138,7 +139,7 @@ def main():
                                            grad_clipping=grad_clipping, peepholes=peepholes, num_filters=num_filters,
                                            dropout=dropout)
     print lasagne.layers.get_all_params(bi_lstm_cnn_crf)
-    """
+
     logger.info("Network structure: hidden=%d, filter=%d" % (num_units, num_filters))
 
     # compute loss

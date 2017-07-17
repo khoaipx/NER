@@ -377,6 +377,8 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
 
         embedd_dict, embedd_dim, caseless = utils.load_word_embedding_dict(embedding, embedding_path, word_alphabet,
                                                                            logger)
+        print 'Embedd_dict'
+        print np.shape(embedd_dict)
         logger.info("Dimension of embedding is %d, Caseless: %d" % (embedd_dim, caseless))
         # fill data tensor (X.shape = [#data, max_length], Y.shape = [#data, max_length])
         X_train, Y_train, mask_train = construct_tensor_fine_tune(word_index_sentences_train,
@@ -467,7 +469,7 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
     word_sentences_train, _, word_index_sentences_train, label_index_sentences_train = read_conll_sequence_labeling(
         train_path, word_alphabet, label_alphabet, word_column, label_column)
     #print word_sentences_train[0]
-    print word_index_sentences_train[0]
+    #print word_index_sentences_train[0]
     #print label_index_sentences_train
 
     # if oov is "random" and do not fine tune, close word_alphabet
