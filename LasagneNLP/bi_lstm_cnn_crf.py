@@ -96,6 +96,7 @@ def main():
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                              use_character=True)
+    print np.shape(embedd_table)
     """np.save('tmp/embedd_table', embedd_table)
     np.save('tmp/char_embedd_table', char_embedd_table)
     num_labels = label_alphabet.size() - 1
