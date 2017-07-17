@@ -117,7 +117,6 @@ def main():
     assert (max_length == max_sent_length)
     assert (num_data == num_data_char)
     with open('tmp/config.ini', 'w') as f:
-        f.write('alphabet_size' + '\t' + str(alphabet_size) + '\n')
         f.write('embedd_dim' + '\t' + str(embedd_dim) + '\n')
         f.write('max_sent_length' + '\t' + str(max_sent_length) + '\n')
         f.write('max_char_length' + '\t' + str(max_char_length) + '\n')
