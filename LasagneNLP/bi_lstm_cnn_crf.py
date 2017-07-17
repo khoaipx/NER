@@ -184,7 +184,7 @@ def main():
             grad_clipping,
             peepholes))
     num_batches = num_data / batch_size
-    num_epochs = 1
+    num_epochs = 1000
     best_loss = 1e+12
     best_acc = 0.0
     best_epoch_loss = 0
