@@ -8,6 +8,7 @@ from gensim.models.word2vec import Word2Vec
 import gzip
 import theano
 import codecs
+import cPickle as pickle
 
 
 def get_logger(name, level=logging.INFO, handler=sys.stdout,
@@ -36,6 +37,8 @@ def load_word_embedding_dict(embedding, embedding_path, word_alphabet, logger, e
         logger.info("Loading word2vec ...")
         word2vec = Word2Vec.load_word2vec_format(embedding_path, binary=False)
         embedd_dim = word2vec.vector_size
+        with open('word2vec.pl', 'wb') as handle:
+            pickle.dump(word2vec, handle, protocol=pickle.HIGHEST_PROTOCOL)
         return word2vec, embedd_dim, True
     elif embedding == 'glove':
         # loading GloVe
