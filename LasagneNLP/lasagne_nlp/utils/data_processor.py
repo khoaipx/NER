@@ -453,7 +453,7 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
                                                                 unknown_embedd, embedd_dict, embedd_dim, caseless)
         X_test, Y_test, mask_test = construct_tensor_not_fine_tune(word_sentences_test, label_index_sentences_test,
                                                                    unknown_embedd, embedd_dict, embedd_dim, caseless)
-        C_train, C_dev, C_test, char_embedd_table = generate_character_data(word_sentences_train, word_sentences_dev,
+        C_train, C_dev, C_test, char_embedd_table, mask_c_train, mask_c_dev, mask_c_test = generate_character_data(word_sentences_train, word_sentences_dev,
                                                                             word_sentences_test,
                                                                             max_length) if use_character else (
             None, None, None, None)
