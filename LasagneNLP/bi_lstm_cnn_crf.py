@@ -97,7 +97,7 @@ def main():
                                                                                               embedding=embedding,
                                                                                               embedding_path=embedding_path,
                                                                                              use_character=True)
-    """np.save('tmp/char_embedd_table', char_embedd_table)
+    #np.save('tmp/char_embedd_table', char_embedd_table)
     num_labels = label_alphabet.size() - 1
 
     logger.info("constructing network...")
@@ -314,7 +314,7 @@ def main():
         best_loss_test_err / test_inst, best_loss_test_corr, test_total, best_loss_test_corr * 100 / test_total)
     logger.info("final best acc test performance (at epoch %d)" % best_epoch_acc)
     print 'test loss: %.4f, corr: %d, total: %d, acc: %.2f%%' % (
-        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)"""
+        best_acc_test_err / test_inst, best_acc_test_corr, test_total, best_acc_test_corr * 100 / test_total)
 
 
 def test():

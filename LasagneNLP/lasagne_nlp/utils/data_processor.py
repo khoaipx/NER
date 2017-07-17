@@ -281,6 +281,7 @@ def generate_character_data(sentences_train, sentences_dev, sentences_test, max_
 
     # close character alphabet
     char_alphabet.close()
+    char_alphabet.save('tmp', 'char_alphabet')
     logger.info("character alphabet size: %d" % (char_alphabet.size() - 1))
 
     max_char_length = min(MAX_CHAR_LENGTH, max(max_char_length_train, max_char_length_dev, max_char_length_test))
@@ -325,7 +326,7 @@ def generate_last_index(mask_c_train, mask_c_dev, mask_c_test):
 
 
 def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=1, label_column=4,
-                                   label_name='pos', oov='embedding', fine_tune=False, embedding="word2Vec",
+                                   label_name='ner', oov='embedding', fine_tune=False, embedding="word2Vec",
                                    embedding_path=None,
                                    use_character=False):
     """
@@ -490,7 +491,7 @@ def load_dataset_sequence_labeling(train_path, dev_path, test_path, word_column=
     # close alphabets
     word_alphabet.close()
     label_alphabet.close()
-
+    label_alphabet.save('tmp', 'label_alphabet')
     logger.info("word alphabet size: %d" % (word_alphabet.size() - 1))
     logger.info("label alphabet size: %d" % (label_alphabet.size() - 1))
 
