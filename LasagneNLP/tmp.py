@@ -1,4 +1,6 @@
 import codecs
+import numpy as np
+import cPickle as pickle
 
 
 def load_word2vec(filename):
@@ -33,6 +35,20 @@ def create_word2vec_new(filename1, filename2):
     f2.close()
 
 
+def dump_word2vec(filename):
+    f = codecs.open(filename, 'r', 'utf-8')
+    words = []
+    vectors = []
+    f.readline()
+    for line in f:
+        line = line.split()
+        words.append(line[0])
+        vectors.append(line[1:])
+    vectors = np.asarray(vectors)
+    np.save('tmp/vectors', vectors)
+    with open('tmp/words.pl', 'wb') as handle:
+        pickle.dump(words, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+
 if __name__ == '__main__':
-    #load_word2vec('data/Vie_Skip_Gram_300.txt')
-    create_word2vec_new('data/Vie_Skip_Gram_300.txt', 'data/Vie_Skip_Gram_300_new.txt')
+    dump_word2vec('data/Vie_Skip_Gram_300_new.txt')
