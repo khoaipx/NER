@@ -43,6 +43,7 @@ def dump_word2vec(filename):
     for line in f:
         line = line.split()
         words.append(line[0])
+        print line[1:]
         vectors.append([float(i) for i in line[1:]])
     vectors = np.asarray(vectors)
     np.save('tmp/vectors', vectors)
