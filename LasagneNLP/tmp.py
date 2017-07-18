@@ -41,10 +41,13 @@ def dump_word2vec(filename):
     vectors = []
     f.readline()
     for line in f:
-        line = line.split()
-        words.append(line[0])
-        print line[1:]
-        vectors.append([float(i) for i in line[1:]])
+        try:
+            line = line.split()
+            words.append(line[0])
+            #print line[1:]
+            vectors.append([float(i) for i in line[1:]])
+        except:
+            print line
     vectors = np.asarray(vectors)
     np.save('tmp/vectors', vectors)
     with open('tmp/words.pl', 'wb') as handle:
