@@ -40,18 +40,19 @@ def dump_word2vec(filename):
     words = []
     vectors = []
     f.readline()
+    cnt = 0
     for line in f:
-        try:
-            line = line.split()
+        line = line.split()
+        if line(line) == 301:
             words.append(line[0])
-            #print line[1:]
             vectors.append([float(i) for i in line[1:]])
-        except:
-            print line
+        else:
+            cnt += 1
     vectors = np.asarray(vectors)
     np.save('tmp/vectors', vectors)
     with open('tmp/words.pl', 'wb') as handle:
         pickle.dump(words, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    print cnt
 
 
 if __name__ == '__main__':
