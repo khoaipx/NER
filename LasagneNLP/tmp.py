@@ -43,7 +43,7 @@ def dump_word2vec(filename):
     cnt = 0
     for line in f:
         line = line.split()
-        if line(line) == 301:
+        if len(line) == 301:
             words.append(line[0])
             vectors.append([float(i) for i in line[1:]])
         else:
